@@ -8,7 +8,7 @@ export default function PlataformasPage() {
         Plataformas y SGBD Modernos
       </h1>
       <p className="text-sm text-[var(--text-muted)] mb-8">
-        Conoce las bases de datos y plataformas mas relevantes de la industria en {new Date().getFullYear()}.
+        16 bases de datos y plataformas de datos que debes conocer. Actualizado marzo 2026.
       </p>
 
       {platformCategories.map((cat) => {
@@ -34,6 +34,11 @@ export default function PlataformasPage() {
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--bg-tertiary)] text-[var(--text-muted)]">
                       {platform.type}
                     </span>
+                    {platform.isNew && (
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]">
+                        NUEVO
+                      </span>
+                    )}
                   </div>
                   <p className="text-xs text-[var(--text-muted)] mb-3 line-clamp-2">
                     {platform.description}

@@ -73,6 +73,38 @@ export const glossary: GlossaryTerm[] = [
   { term: 'COALESCE', definition: 'Retorna el primer valor no-NULL de una lista de argumentos.', example: "COALESCE(telefono, 'Sin telefono')", category: 'Funciones', level: 'intermedio' },
   { term: 'NORMALIZACION', definition: 'Proceso de organizar tablas para minimizar redundancia. Formas normales: 1FN, 2FN, 3FN, BCNF.', category: 'Diseno', level: 'intermedio' },
   { term: 'MODELO ER', definition: 'Modelo Entidad-Relacion. Diagrama que representa entidades, atributos y relaciones.', category: 'Diseno', level: 'intermedio' },
+
+  // Transacciones y concurrencia
+  { term: 'MVCC', definition: 'Multi-Version Concurrency Control. Tecnica que mantiene multiples versiones de datos para permitir lecturas y escrituras concurrentes sin bloqueos.', example: 'PostgreSQL usa MVCC para que un SELECT no bloquee un UPDATE concurrente.', category: 'Avanzado', level: 'avanzado' },
+  { term: 'WAL', definition: 'Write-Ahead Log. Registro de todas las modificaciones antes de aplicarlas al almacenamiento principal. Garantiza durabilidad y permite recovery.', example: 'PostgreSQL escribe en el WAL antes de confirmar un COMMIT.', category: 'Avanzado', level: 'avanzado' },
+  { term: 'DEADLOCK', definition: 'Situacion donde dos o mas transacciones se bloquean mutuamente esperando recursos que la otra tiene. El SGBD detecta y cancela una para resolverlo.', example: 'Transaccion A bloquea tabla X y espera tabla Y; Transaccion B bloquea Y y espera X.', category: 'Avanzado', level: 'avanzado' },
+  { term: 'NIVEL DE AISLAMIENTO', definition: 'Grado de proteccion entre transacciones concurrentes. De menor a mayor: READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE.', example: 'SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;', category: 'Avanzado', level: 'avanzado' },
+  { term: 'SAVEPOINT', definition: 'Punto de guardado dentro de una transaccion que permite hacer rollback parcial sin deshacer toda la transaccion.', example: 'SAVEPOINT sp1; ... ROLLBACK TO sp1;', category: 'Avanzado', level: 'avanzado' },
+
+  // Indices y optimizacion
+  { term: 'B-TREE', definition: 'Estructura de datos de arbol balanceado usada en la mayoria de indices. Eficiente para busquedas por igualdad, rango y ordenamiento.', example: 'CREATE INDEX idx_nombre ON usuarios(nombre); -- usa B-tree por defecto', category: 'Avanzado', level: 'avanzado' },
+  { term: 'HASH INDEX', definition: 'Indice basado en funcion hash. Solo sirve para busquedas por igualdad exacta, mas rapido que B-tree para ese caso.', example: 'CREATE INDEX idx_email ON usuarios USING HASH (email);', category: 'Avanzado', level: 'avanzado' },
+  { term: 'COVERING INDEX', definition: 'Indice que contiene todas las columnas necesarias para una consulta, evitando acceder a la tabla (index-only scan).', example: 'CREATE INDEX idx_cover ON ventas(producto_id, fecha) INCLUDE (monto);', category: 'Avanzado', level: 'avanzado' },
+  { term: 'EXPLAIN', definition: 'Comando que muestra el plan de ejecucion de una consulta sin ejecutarla. Fundamental para optimizar queries.', example: 'EXPLAIN ANALYZE SELECT * FROM ventas WHERE monto > 1000;', category: 'Avanzado', level: 'avanzado' },
+  { term: 'FULL TABLE SCAN', definition: 'Cuando el motor de BD recorre toda la tabla fila por fila. Ineficiente para tablas grandes; un indice puede evitarlo.', category: 'Avanzado', level: 'avanzado' },
+
+  // Arquitectura de datos moderna
+  { term: 'DATA LAKEHOUSE', definition: 'Arquitectura que combina la flexibilidad de un data lake (archivos como Parquet) con la confiabilidad de un data warehouse (SQL, ACID, esquema). Databricks y Snowflake lideran este modelo.', category: 'Plataformas', level: 'avanzado' },
+  { term: 'DELTA LAKE', definition: 'Formato de almacenamiento open source creado por Databricks que agrega transacciones ACID, time travel y schema enforcement sobre archivos Parquet en un data lake.', category: 'Plataformas', level: 'avanzado' },
+  { term: 'APACHE ICEBERG', definition: 'Formato de tabla abierto para datasets analiticos a gran escala. Soporta time travel, schema evolution y partitioning eficiente. Adoptado por Snowflake, Databricks, AWS y otros.', category: 'Plataformas', level: 'avanzado' },
+  { term: 'OLAP', definition: 'Online Analytical Processing. Sistemas optimizados para consultas analiticas complejas sobre grandes volumenes de datos (data warehouses). Contrario a OLTP.', example: 'Snowflake, BigQuery y Redshift son sistemas OLAP.', category: 'Plataformas', level: 'intermedio' },
+  { term: 'STAR SCHEMA', definition: 'Modelo de datos para data warehouses: una tabla de hechos central (ventas, transacciones) rodeada de tablas de dimensiones (producto, cliente, tiempo).', category: 'Diseno', level: 'avanzado' },
+  { term: 'ETL / ELT', definition: 'Extract, Transform, Load (ETL) o Extract, Load, Transform (ELT). Procesos para mover datos de fuentes a un data warehouse. ELT es mas moderno: carga primero y transforma en el warehouse con SQL.', example: 'dbt es la herramienta mas popular para la T de ELT.', category: 'Plataformas', level: 'intermedio' },
+
+  // IA y bases de datos
+  { term: 'BASE DE DATOS VECTORIAL', definition: 'Base de datos especializada en almacenar y buscar vectores (embeddings). Encuentra los datos "mas similares" usando distancia coseno o euclidiana.', example: 'pgvector, Pinecone, Weaviate, Chroma', category: 'Plataformas', level: 'avanzado' },
+  { term: 'EMBEDDING', definition: 'Representacion numerica de texto, imagenes u otros datos como un vector de numeros. Textos con significado similar producen vectores cercanos.', example: '"Perro" y "Cachorro" tendran embeddings cercanos; "Perro" y "Avion" estaran lejos.', category: 'Plataformas', level: 'avanzado' },
+  { term: 'PGVECTOR', definition: 'Extension de PostgreSQL que agrega tipo de dato VECTOR y operadores de similitud. Permite busqueda semantica directamente en PostgreSQL.', example: "SELECT * FROM docs ORDER BY embedding <=> '[0.1, 0.2, ...]' LIMIT 5;", category: 'Plataformas', level: 'avanzado' },
+  { term: 'RAG', definition: 'Retrieval-Augmented Generation. Patron de IA que busca documentos relevantes en una base de datos (vectorial) y los usa como contexto para generar respuestas con un LLM.', category: 'Plataformas', level: 'avanzado' },
+
+  // Cloud y serverless
+  { term: 'SERVERLESS DATABASE', definition: 'Base de datos que escala automaticamente y cobra por uso, sin necesidad de provisionar servidores. Puede escalar a cero cuando no hay carga.', example: 'Neon, PlanetScale, BigQuery, Aurora Serverless', category: 'Plataformas', level: 'intermedio' },
+  { term: 'SCALE-TO-ZERO', definition: 'Capacidad de una base de datos serverless de apagar completamente el compute cuando no hay consultas, reduciendo el costo a solo almacenamiento.', example: 'Neon escala a cero y despierta en ~300ms cuando llega una consulta.', category: 'Plataformas', level: 'intermedio' },
 ];
 
 export const glossaryCategories = [...new Set(glossary.map((t) => t.category))];
