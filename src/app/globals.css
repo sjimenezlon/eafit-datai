@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Modern UI palette */
+  --bg-primary: #0f1117;
+  --bg-secondary: #1a1d28;
+  --bg-tertiary: #252a37;
+  --bg-card: #1e2231;
+  --text-body: #e5e7eb;
+  --text-muted: #6b7280;
+  --text-heading: #f9fafb;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+  --border-color: #2d3748;
+  --success: #10b981;
+  --error: #ef4444;
+  --warning: #f59e0b;
+
+  /* Terminal palette (for code areas) */
+  --terminal-bg: #0a0e14;
+  --terminal-green: #00ff41;
+  --terminal-green-dim: #00cc33;
+  --terminal-cyan: #00d4ff;
+  --terminal-border: rgba(0, 255, 65, 0.3);
+  --terminal-glow: rgba(0, 255, 65, 0.15);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-body);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--bg-primary);
+  color: var(--text-body);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Terminal window component */
+.terminal-window {
+  background: var(--terminal-bg);
+  border: 1px solid var(--terminal-border);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 20px var(--terminal-glow);
+}
+
+.terminal-header {
+  background: var(--bg-tertiary);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.terminal-dot-red { background: #ff5f56; }
+.terminal-dot-yellow { background: #ffbd2e; }
+.terminal-dot-green { background: #27ca40; }
+
+.terminal-title {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-family: var(--font-mono), 'Courier New', monospace;
+  margin-left: 8px;
+}
+
+.terminal-body {
+  padding: 16px;
+  font-family: var(--font-mono), 'Courier New', monospace;
+  color: var(--terminal-green);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Glow effects */
+.glow-green {
+  text-shadow: 0 0 10px var(--terminal-green), 0 0 20px rgba(0, 255, 65, 0.3);
+}
+.glow-blue {
+  text-shadow: 0 0 10px var(--accent-blue), 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
+}
+
+/* Pulse animation for active elements */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 5px var(--terminal-glow); }
+  50% { box-shadow: 0 0 15px var(--terminal-glow), 0 0 30px rgba(0, 255, 65, 0.1); }
+}
+
+/* CodeMirror overrides for terminal style */
+.cm-editor {
+  background: var(--terminal-bg) !important;
+  font-size: 0.9rem;
+}
+.cm-editor .cm-gutters {
+  background: var(--bg-tertiary) !important;
+  border-right: 1px solid var(--terminal-border) !important;
+  color: var(--text-muted) !important;
+}
+.cm-editor .cm-activeLineGutter {
+  background: rgba(0, 255, 65, 0.1) !important;
+}
+.cm-editor .cm-activeLine {
+  background: rgba(0, 255, 65, 0.05) !important;
+}
+.cm-editor .cm-cursor {
+  border-left-color: var(--terminal-green) !important;
+}
+.cm-editor .cm-selectionBackground {
+  background: rgba(0, 255, 65, 0.15) !important;
 }
