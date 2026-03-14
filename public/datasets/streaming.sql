@@ -545,3 +545,31 @@ INSERT INTO suscripciones VALUES (57, 25,  1, '2022-10-01', '2023-03-16', 'Cance
 INSERT INTO suscripciones VALUES (58, 39,  2, '2023-05-01', '2023-11-09', 'Cancelada', 29900.00);
 INSERT INTO suscripciones VALUES (59, 31,  2, '2022-12-01', '2023-06-26', 'Cancelada', 29900.00);
 INSERT INTO suscripciones VALUES (60, 46,  2, '2023-09-01', '2024-03-14', 'Cancelada', 29900.00);
+
+-- ============================================================
+-- VISTA MATERIALIZADA: usuarios_streaming
+-- Tabla denormalizada para ejercicios del Módulo 8
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS usuarios_streaming AS
+SELECT
+    u.id,
+    u.nombre,
+    u.email,
+    u.ciudad,
+    p.nombre AS plan_actual,
+    u.fecha_registro,
+    u.estado,
+    p.precio_mensual AS ingreso_mensual,
+    COALESCE(stats.contenidos_vistos, 0) AS contenidos_vistos,
+    COALESCE(stats.ultima_actividad, u.fecha_registro) AS ultima_actividad
+FROM usuarios u
+JOIN planes p ON u.plan_id = p.id
+LEFT JOIN (
+    SELECT
+        usuario_id,
+        COUNT(*) AS contenidos_vistos,
+        MAX(fecha) AS ultima_actividad
+    FROM reproducciones
+    GROUP BY usuario_id
+) stats ON u.id = stats.usuario_id;

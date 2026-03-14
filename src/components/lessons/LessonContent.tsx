@@ -11,13 +11,16 @@ export default function LessonContent({ section }: { section: LessonSection }) {
 
   const runDemo = useCallback(() => {
     if (section.code) {
-      const lines = section.code.split('\n');
-      // Find the last complete SQL statement
-      const statements = section.code.split(';').filter((s) => s.trim());
-      if (statements.length > 0) {
-        const lastStatement = statements[statements.length - 1].trim() + ';';
-        setDemoResult(executeQuery(lastStatement));
+      const statements = section.code
+        .split(';')
+        .map((s) => s.trim())
+        .filter((s) => s && !s.startsWith('--'));
+      let lastResult = null;
+      for (const stmt of statements) {
+        lastResult = executeQuery(stmt + ';');
+        if (lastResult.error) break;
       }
+      if (lastResult) setDemoResult(lastResult);
     }
   }, [section.code, executeQuery]);
 
