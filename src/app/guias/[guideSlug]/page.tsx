@@ -3,28 +3,28 @@ import Link from 'next/link';
 const guidesContent: Record<string, { title: string; intro: string; steps: { title: string; content: string; code?: string }[] }> = {
   'pensar-antes-de-escribir': {
     title: 'Pensar Antes de Escribir SQL',
-    intro: 'Los mejores cientificos de datos no empiezan escribiendo codigo. Empiezan pensando. Esta guia te ensena una metodologia de 5 pasos que transforma como abordas cualquier problema SQL.',
+    intro: 'Los mejores científicos de datos no empiezan escribiendo código. Empiezan pensando. Esta guía te enseña una metodología de 5 pasos que transforma cómo abordas cualquier problema SQL.',
     steps: [
       {
         title: 'Paso 1: Entender el problema',
-        content: 'Antes de tocar el teclado, preguntate: Que pregunta estoy respondiendo? Quien necesita esta informacion? Cual es la decision que depende de este dato? Escribe la pregunta en lenguaje natural antes de pensar en SQL.',
+        content: 'Antes de tocar el teclado, pregúntate: ¿Qué pregunta estoy respondiendo? ¿Quién necesita esta información? ¿Cuál es la decisión que depende de este dato? Escribe la pregunta en lenguaje natural antes de pensar en SQL.',
       },
       {
         title: 'Paso 2: Identificar las tablas',
-        content: 'Que tablas contienen los datos que necesitas? Dibuja mentalmente (o fisicamente) las relaciones. Cuales son las claves que las conectan?',
+        content: '¿Qué tablas contienen los datos que necesitas? Dibuja mentalmente (o físicamente) las relaciones. ¿Cuáles son las claves que las conectan?',
       },
       {
         title: 'Paso 3: Visualizar el resultado',
-        content: 'Imagina la tabla resultado antes de escribir. Cuantas columnas tendra? Que representara cada fila? Esto te dice que necesitas en SELECT y como agrupar.',
+        content: 'Imagina la tabla resultado antes de escribir. ¿Cuántas columnas tendrá? ¿Qué representará cada fila? Esto te dice qué necesitas en SELECT y cómo agrupar.',
       },
       {
         title: 'Paso 4: Construir incrementalmente',
-        content: 'No escribas toda la consulta de una vez. Empieza con un SELECT basico, ejecuta, verifica. Agrega JOIN, ejecuta, verifica. Agrega WHERE, ejecuta, verifica. Cada paso te acerca al resultado.',
-        code: '-- Paso 1: Ver los datos base\nSELECT * FROM estudiantes LIMIT 5;\n\n-- Paso 2: Agregar JOIN\nSELECT e.nombre, d.nombre AS depto\nFROM estudiantes e\nJOIN departamentos d ON e.departamento_id = d.id\nLIMIT 5;\n\n-- Paso 3: Agregar filtro y agrupacion\nSELECT d.nombre, COUNT(*), ROUND(AVG(e.promedio), 2)\nFROM estudiantes e\nJOIN departamentos d ON e.departamento_id = d.id\nGROUP BY d.nombre\nORDER BY AVG(e.promedio) DESC;',
+        content: 'No escribas toda la consulta de una vez. Empieza con un SELECT básico, ejecuta, verifica. Agrega JOIN, ejecuta, verifica. Agrega WHERE, ejecuta, verifica. Cada paso te acerca al resultado.',
+        code: '-- Paso 1: Ver los datos base\nSELECT * FROM estudiantes LIMIT 5;\n\n-- Paso 2: Agregar JOIN\nSELECT e.nombre, d.nombre AS depto\nFROM estudiantes e\nJOIN departamentos d ON e.departamento_id = d.id\nLIMIT 5;\n\n-- Paso 3: Agregar filtro y agrupación\nSELECT d.nombre, COUNT(*), ROUND(AVG(e.promedio), 2)\nFROM estudiantes e\nJOIN departamentos d ON e.departamento_id = d.id\nGROUP BY d.nombre\nORDER BY AVG(e.promedio) DESC;',
       },
       {
         title: 'Paso 5: Validar y comunicar',
-        content: 'Verifica que el resultado tiene sentido. Los numeros son razonables? Hay NULLs inesperados? Finalmente, nombra tus columnas con alias claros para que cualquier persona entienda el resultado.',
+        content: 'Verifica que el resultado tiene sentido. ¿Los números son razonables? ¿Hay NULLs inesperados? Finalmente, nombra tus columnas con alias claros para que cualquier persona entienda el resultado.',
       },
     ],
   },
@@ -41,10 +41,10 @@ export default async function GuidePage({ params }: { params: Promise<{ guideSlu
   if (!guide) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-xl text-[var(--text-heading)] mb-2">Guia en desarrollo</h1>
-        <p className="text-sm text-[var(--text-muted)] mb-4">Esta guia estara disponible proximamente.</p>
+        <h1 className="text-xl text-[var(--text-heading)] mb-2">Guía en desarrollo</h1>
+        <p className="text-sm text-[var(--text-muted)] mb-4">Esta guía estará disponible próximamente.</p>
         <Link href="/guias" className="text-sm text-[var(--accent-blue)] hover:underline">
-          Volver a Guias
+          Volver a Guías
         </Link>
       </div>
     );
@@ -53,7 +53,7 @@ export default async function GuidePage({ params }: { params: Promise<{ guideSlu
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <Link href="/guias" className="text-sm text-[var(--accent-blue)] hover:underline mb-4 block">
-        &larr; Volver a Guias
+        &larr; Volver a Guías
       </Link>
 
       <h1 className="text-2xl font-bold text-[var(--text-heading)] mb-3">{guide.title}</h1>

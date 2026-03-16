@@ -17,7 +17,7 @@ export default function ResultsTable({ result }: ResultsTableProps) {
           <span className="terminal-title">Resultados</span>
         </div>
         <div className="terminal-body text-[var(--text-muted)] text-sm py-8 text-center">
-          Ejecuta una consulta para ver los resultados aqui
+          Ejecuta una consulta para ver los resultados aquí
         </div>
       </div>
     );

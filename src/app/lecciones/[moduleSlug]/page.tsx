@@ -21,7 +21,7 @@ export default async function ModulePage({ params }: { params: Promise<{ moduleS
         <span className="text-4xl" dangerouslySetInnerHTML={{ __html: mod.icon }} />
         <div>
           <div className="text-xs text-[var(--text-muted)]">
-            Modulo {mod.order} &middot; Semanas {mod.weekRange[0]}-{mod.weekRange[1]} &middot; Dataset: {mod.dataset}
+            Módulo {mod.order} &middot; Semanas {mod.weekRange[0]}-{mod.weekRange[1]} &middot; Dataset: {mod.dataset}
           </div>
           <h1 className="text-2xl font-bold text-[var(--text-heading)]">{mod.title}</h1>
           <p className="text-sm text-[var(--text-muted)]">{mod.description}</p>
@@ -65,7 +65,7 @@ export default async function ModulePage({ params }: { params: Promise<{ moduleS
       ) : (
         <div className="text-center py-12 text-[var(--text-muted)]">
           <p className="text-lg mb-2">Contenido en desarrollo</p>
-          <p className="text-sm">Este modulo estara disponible proximamente.</p>
+          <p className="text-sm">Este módulo estará disponible próximamente.</p>
         </div>
       )}
     </div>

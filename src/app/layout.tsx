@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Eafit - DatAI | SQL & Bases de Datos',
   description:
-    'Plataforma interactiva para aprender SQL y Sistemas de Gestion de Bases de Datos. Practica con datos reales, lecciones progresivas y pensamiento de cientifico de datos.',
+    'Plataforma interactiva para aprender SQL y Sistemas de Gestión de Bases de Datos. Práctica con datos reales, lecciones progresivas y pensamiento de científico de datos.',
   keywords: ['SQL', 'bases de datos', 'SGBD', 'EAFIT', 'aprender SQL', 'data science'],
 };
 

@@ -23,14 +23,14 @@ export default function GlosarioPage() {
     <div className="max-w-5xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-[var(--text-heading)] mb-2">Glosario SQL</h1>
       <p className="text-sm text-[var(--text-muted)] mb-6">
-        Referencia rapida de {glossary.length} terminos de SQL y bases de datos.
+        Referencia rápida de {glossary.length} términos de SQL y bases de datos.
       </p>
 
       {/* Search and filters */}
       <div className="flex flex-wrap gap-3 mb-6">
         <input
           type="text"
-          placeholder="Buscar termino..."
+          placeholder="Buscar término..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="px-3 py-2 bg-[var(--bg-secondary)] border border-[var(--border-color)] rounded-lg text-sm text-[var(--text-body)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent-blue)] w-64"
@@ -83,7 +83,7 @@ export default function GlosarioPage() {
 
       {/* Results count */}
       <div className="text-xs text-[var(--text-muted)] mb-4">
-        {filtered.length} termino{filtered.length !== 1 ? 's' : ''}
+        {filtered.length} término{filtered.length !== 1 ? 's' : ''}
       </div>
 
       {/* Terms grid */}

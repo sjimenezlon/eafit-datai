@@ -24,7 +24,7 @@ function LessonInner() {
   if (!data) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-        <h1 className="text-xl text-[var(--text-heading)] mb-2">Leccion no encontrada</h1>
+        <h1 className="text-xl text-[var(--text-heading)] mb-2">Lección no encontrada</h1>
         <Link href="/lecciones" className="text-sm text-[var(--accent-blue)] hover:underline">
           Volver a lecciones
         </Link>
@@ -101,7 +101,7 @@ function LessonInner() {
         {lesson.exercises.length > 0 && (
           <div className="mt-10">
             <h2 className="text-lg font-bold text-[var(--text-heading)] mb-4">
-              Ejercicios Practicos
+              Ejercicios Prácticos
             </h2>
             {lesson.exercises.map((ex, i) => (
               <ExerciseBlock key={ex.id} exercise={ex} index={i} />

@@ -10,7 +10,7 @@ const navItems = [
   { href: '/laboratorio', label: 'Laboratorio', icon: '&#x2318;' },
   { href: '/glosario', label: 'Glosario', icon: '&#x1F4D6;' },
   { href: '/plataformas', label: 'Plataformas', icon: '&#x2601;' },
-  { href: '/guias', label: 'Guias', icon: '&#x1F9ED;' },
+  { href: '/guias', label: 'Guías', icon: '&#x1F9ED;' },
 ];
 
 export default function Navbar() {

@@ -19,8 +19,8 @@ export default function Home() {
           Eafit - <span className="bg-gradient-to-r from-[var(--accent-blue)] to-[var(--accent-purple)] bg-clip-text text-transparent">DatAI</span>
         </h1>
         <p className="text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-8">
-          Aprende SQL y Sistemas de Gestion de Bases de Datos con practica real.
-          Escribe consultas, ve resultados al instante y piensa como cientifico de datos.
+          Aprende SQL y Sistemas de Gestión de Bases de Datos con práctica real.
+          Escribe consultas, ve resultados al instante y piensa como científico de datos.
         </p>
         <div className="flex gap-4 justify-center flex-wrap">
           <Link
@@ -41,7 +41,7 @@ export default function Home() {
         <div className="grid grid-cols-3 gap-6 max-w-md mx-auto mt-12">
           <div>
             <div className="text-2xl font-bold text-[var(--text-heading)]">{syllabus.length}</div>
-            <div className="text-xs text-[var(--text-muted)]">Modulos</div>
+            <div className="text-xs text-[var(--text-muted)]">Módulos</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-[var(--text-heading)]">{totalLessons}+</div>
@@ -95,7 +95,7 @@ export default function Home() {
 
       {/* Modules Grid */}
       <section className="mb-16">
-        <h2 className="text-2xl font-bold text-[var(--text-heading)] mb-2">Modulos del Curso</h2>
+        <h2 className="text-2xl font-bold text-[var(--text-heading)] mb-2">Módulos del Curso</h2>
         <p className="text-sm text-[var(--text-muted)] mb-6">
           Contenido progresivo con casos comerciales reales: e-commerce, banca digital y streaming.
         </p>
@@ -115,7 +115,7 @@ export default function Home() {
                 />
                 <div>
                   <div className="text-xs text-[var(--text-muted)]">
-                    Modulo {mod.order}
+                    Módulo {mod.order}
                   </div>
                   <h3 className="font-semibold text-[var(--text-heading)] text-sm">
                     {mod.title}
@@ -130,7 +130,7 @@ export default function Home() {
                 {mod.lessons.length === 0 && (
                   <>
                     <span>&middot;</span>
-                    <span className="text-[var(--warning)]">Proximamente</span>
+                    <span className="text-[var(--warning)]">Próximamente</span>
                   </>
                 )}
               </div>
@@ -142,13 +142,13 @@ export default function Home() {
       {/* Features */}
       <section className="mb-16">
         <h2 className="text-2xl font-bold text-[var(--text-heading)] mb-6">
-          Como funciona
+          Cómo funciona
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
-              title: 'Aprende la teoria',
-              desc: 'Cada leccion explica conceptos con ejemplos claros y visuales antes de practicar.',
+              title: 'Aprende la teoría',
+              desc: 'Cada lección explica conceptos con ejemplos claros y visuales antes de practicar.',
               icon: '&#x1F4D6;',
             },
             {
@@ -157,7 +157,7 @@ export default function Home() {
               icon: '&#x1F4BB;',
             },
             {
-              title: 'Piensa como cientifico de datos',
+              title: 'Piensa como científico de datos',
               desc: 'No solo aprendes sintaxis: aprendes a formular preguntas y analizar datos.',
               icon: '&#x1F9E0;',
             },
@@ -181,8 +181,8 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center py-8 border-t border-[var(--border-color)] text-xs text-[var(--text-muted)]">
-        <p>Eafit - DatAI &middot; Sistemas de Gestion de Bases de Datos &middot; Universidad EAFIT</p>
-        <p className="mt-1">Creado por Santiago Jimenez Londono</p>
+        <p>Eafit - DatAI &middot; Sistemas de Gestión de Bases de Datos &middot; Universidad EAFIT</p>
+        <p className="mt-1">Creado por Santiago Jiménez Londoño</p>
       </footer>
     </div>
   );

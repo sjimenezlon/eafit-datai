@@ -60,7 +60,7 @@ export default function ExerciseBlock({ exercise, index }: ExerciseBlockProps) {
       if (exercise.expectedRowCount !== undefined) {
         if (queryResult.rowCount !== exercise.expectedRowCount) {
           setFeedback(
-            `Se esperan ${exercise.expectedRowCount} filas, tu consulta retorno ${queryResult.rowCount}`
+            `Se esperan ${exercise.expectedRowCount} filas, tu consulta retornó ${queryResult.rowCount}`
           );
           return false;
         }
@@ -130,7 +130,7 @@ export default function ExerciseBlock({ exercise, index }: ExerciseBlockProps) {
 
       {isCorrect && result && !result.error && (
         <div className="mt-3 p-3 rounded-lg bg-[var(--success)]/10 border border-[var(--success)]/20 text-sm text-[var(--success)]">
-          Correcto! Excelente trabajo.
+          ¡Correcto! Excelente trabajo.
         </div>
       )}
 
@@ -147,8 +147,8 @@ export default function ExerciseBlock({ exercise, index }: ExerciseBlockProps) {
               {hintLevel === 0
                 ? 'Necesito una pista'
                 : hintLevel === 1
-                ? 'Otra pista mas'
-                : 'Mostrar solucion'}
+                ? 'Otra pista más'
+                : 'Mostrar solución'}
             </button>
           )}
           {hintLevel > 0 && (

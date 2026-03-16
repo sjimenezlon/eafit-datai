@@ -9,8 +9,8 @@ import { QueryResult } from '@/types/lesson';
 import { incrementQueryCount } from '@/lib/progress-store';
 
 const DATASETS = [
-  { name: 'ecommerce', label: 'TiendaOnline.co', description: 'Productos, pedidos, clientes, resenas — E-commerce colombiano' },
-  { name: 'finanzas', label: 'BancoDigital', description: 'Cuentas, transacciones, prestamos, tarjetas — Banca digital' },
+  { name: 'ecommerce', label: 'TiendaOnline.co', description: 'Productos, pedidos, clientes, reseñas — E-commerce colombiano' },
+  { name: 'finanzas', label: 'BancoDigital', description: 'Cuentas, transacciones, préstamos, tarjetas — Banca digital' },
   { name: 'streaming', label: 'StreamCo', description: 'Usuarios, contenido, reproducciones, suscripciones — Streaming' },
   { name: 'universidad', label: 'Universidad EAFIT', description: 'Estudiantes, cursos, profesores, inscripciones' },
 ];

@@ -4,21 +4,21 @@ const guides = [
   {
     slug: 'pensar-antes-de-escribir',
     title: 'Pensar Antes de Escribir SQL',
-    description: 'Metodologia de 5 pasos para abordar cualquier problema SQL como cientifico de datos.',
+    description: 'Metodología de 5 pasos para abordar cualquier problema SQL como científico de datos.',
     steps: 5,
     difficulty: 'basico' as const,
   },
   {
     slug: 'optimizar-consultas',
     title: 'Optimizar Consultas SQL',
-    description: 'Guia practica para identificar y corregir consultas lentas.',
+    description: 'Guía práctica para identificar y corregir consultas lentas.',
     steps: 7,
     difficulty: 'avanzado' as const,
   },
   {
     slug: 'disenar-esquema',
-    title: 'Disenar un Esquema desde Cero',
-    description: 'Como ir de un problema del mundo real a un diagrama ER y tablas normalizadas.',
+    title: 'Diseñar un Esquema desde Cero',
+    description: 'Cómo ir de un problema del mundo real a un diagrama ER y tablas normalizadas.',
     steps: 6,
     difficulty: 'intermedio' as const,
   },
@@ -32,7 +32,7 @@ const guides = [
   {
     slug: 'window-functions',
     title: 'Window Functions: La Herramienta Secreta',
-    description: 'Aprende a usar ROW_NUMBER, RANK, LAG, LEAD y transforma tu SQL analitico.',
+    description: 'Aprende a usar ROW_NUMBER, RANK, LAG, LEAD y transforma tu SQL analítico.',
     steps: 5,
     difficulty: 'avanzado' as const,
   },
@@ -41,9 +41,9 @@ const guides = [
 export default function GuiasPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-[var(--text-heading)] mb-2">Guias Paso a Paso</h1>
+      <h1 className="text-3xl font-bold text-[var(--text-heading)] mb-2">Guías Paso a Paso</h1>
       <p className="text-sm text-[var(--text-muted)] mb-8">
-        Guias practicas para mejorar tu programacion SQL y pensar como cientifico de datos.
+        Guías prácticas para mejorar tu programación SQL y pensar como científico de datos.
       </p>
 
       <div className="space-y-4">

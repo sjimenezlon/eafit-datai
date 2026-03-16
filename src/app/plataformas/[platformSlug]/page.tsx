@@ -40,7 +40,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
 
       {/* Que es */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">Que es {platform.name}?</h2>
+        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">¿Qué es {platform.name}?</h2>
         <p className="text-sm text-[var(--text-body)] leading-relaxed">{platform.description}</p>
       </section>
 
@@ -54,7 +54,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
 
       {/* Caracteristicas Clave */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">Caracteristicas Clave</h2>
+        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">Características Clave</h2>
         <div className="grid md:grid-cols-2 gap-2">
           {platform.keyFeatures.map((feature) => (
             <div key={feature} className="flex items-start gap-2 p-3 rounded-lg bg-[var(--bg-card)] border border-[var(--border-color)]">
@@ -129,7 +129,7 @@ export default async function PlatformPage({ params }: { params: Promise<{ platf
 
       {/* Posicion en el Mercado */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">Posicion en el Mercado</h2>
+        <h2 className="text-lg font-bold text-[var(--text-heading)] mb-3">Posición en el Mercado</h2>
         <div className="p-4 rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)]">
           <p className="text-xs text-[var(--text-body)] leading-relaxed">{platform.marketPosition}</p>
         </div>

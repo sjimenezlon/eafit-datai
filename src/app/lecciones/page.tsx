@@ -6,7 +6,7 @@ export default function LeccionesPage() {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-[var(--text-heading)] mb-2">Lecciones</h1>
       <p className="text-sm text-[var(--text-muted)] mb-8">
-        8 modulos con casos comerciales reales. Avanza a tu propio ritmo.
+        8 módulos con casos comerciales reales. Avanza a tu propio ritmo.
       </p>
 
       <div className="space-y-6">
@@ -24,7 +24,7 @@ export default function LeccionesPage() {
                 />
                 <div className="flex-1">
                   <div className="text-xs text-[var(--text-muted)] mb-0.5">
-                    Modulo {mod.order} &middot; Dataset: {mod.dataset}
+                    Módulo {mod.order} &middot; Dataset: {mod.dataset}
                   </div>
                   <h2 className="font-bold text-[var(--text-heading)]">{mod.title}</h2>
                 </div>
@@ -77,7 +77,7 @@ export default function LeccionesPage() {
               </div>
             ) : (
               <div className="px-5 py-4 text-sm text-[var(--text-muted)] italic">
-                Contenido en desarrollo - Proximamente disponible
+                Contenido en desarrollo - Próximamente disponible
               </div>
             )}
           </div>
