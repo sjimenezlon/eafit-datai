@@ -10,6 +10,7 @@ const navItems = [
   { href: '/laboratorio', label: 'Laboratorio', icon: '&#x2318;' },
   { href: '/glosario', label: 'Glosario', icon: '&#x1F4D6;' },
   { href: '/plataformas', label: 'Plataformas', icon: '&#x2601;' },
+  { href: '/dialectos', label: 'Dialectos', icon: '&#x21C6;' },
   { href: '/guias', label: 'Guías', icon: '&#x1F9ED;' },
 ];
 

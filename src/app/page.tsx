@@ -35,6 +35,12 @@ export default function Home() {
           >
             Abrir Laboratorio SQL
           </Link>
+          <Link
+            href="/dialectos"
+            className="px-6 py-3 border border-[var(--accent-purple)]/40 text-[var(--accent-purple)] rounded-lg font-medium text-sm hover:bg-[var(--accent-purple)]/10 transition-colors"
+          >
+            Comparar Dialectos
+          </Link>
         </div>
 
         {/* Stats */}
