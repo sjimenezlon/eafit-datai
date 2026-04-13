@@ -36,6 +36,13 @@ const guides = [
     steps: 5,
     difficulty: 'avanzado' as const,
   },
+  {
+    slug: 'transacciones-commit',
+    title: 'Transacciones: COMMIT, ROLLBACK y la regla ACID',
+    description: 'Entiende BEGIN/COMMIT/ROLLBACK, ACID, niveles de aislamiento y cómo evitar deadlocks.',
+    steps: 6,
+    difficulty: 'intermedio' as const,
+  },
 ];
 
 export default function GuiasPage() {
