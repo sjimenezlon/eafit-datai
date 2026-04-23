@@ -19,6 +19,7 @@ type SectionId =
   | 'modelos'
   | 'rag'
   | 'plataformas'
+  | 'espacios'
   | 'gestion'
   | 'tendencias'
   | 'quiz'
@@ -36,6 +37,7 @@ const SECTIONS: { id: SectionId; label: string; minutes: number; icon: string }[
   { id: 'modelos', label: 'Modelos de datos', minutes: 30, icon: '⌬' },
   { id: 'rag', label: 'RAG y vectores', minutes: 30, icon: '✦' },
   { id: 'plataformas', label: 'Plataformas', minutes: 35, icon: '◉' },
+  { id: 'espacios', label: 'Espacios: misma lógica', minutes: 35, icon: '▣' },
   { id: 'gestion', label: 'Gestión de proyectos', minutes: 20, icon: '⌗' },
   { id: 'tendencias', label: 'Tendencias 2026', minutes: 20, icon: '➚' },
   { id: 'quiz', label: 'Quiz final', minutes: 15, icon: '?' },
@@ -95,6 +97,7 @@ export default function ResumenClient() {
           <ModelosDatos onDone={() => toggleDone('modelos')} done={completed.has('modelos')} />
           <RAG onDone={() => toggleDone('rag')} done={completed.has('rag')} />
           <Plataformas onDone={() => toggleDone('plataformas')} done={completed.has('plataformas')} />
+          <Espacios onDone={() => toggleDone('espacios')} done={completed.has('espacios')} />
           <GestionProyectos onDone={() => toggleDone('gestion')} done={completed.has('gestion')} />
           <Tendencias onDone={() => toggleDone('tendencias')} done={completed.has('tendencias')} />
           <Quiz onDone={() => toggleDone('quiz')} done={completed.has('quiz')} />
@@ -113,53 +116,76 @@ function Header({ totalMinutes, progress }: { totalMinutes: number; progress: nu
   const h = Math.floor(totalMinutes / 60);
   const m = totalMinutes % 60;
   return (
-    <header className="relative overflow-hidden rounded-2xl border border-[var(--border-color)] bg-gradient-to-br from-[var(--bg-card)] via-[var(--bg-secondary)] to-[var(--bg-card)] p-8 md:p-12">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '20px 20px' }} />
+    <header className="relative overflow-hidden rounded-2xl border border-[var(--border-color)] p-8 md:p-14">
+      <div className="absolute inset-0" style={{
+        background: 'radial-gradient(circle at 15% 10%, rgba(59,130,246,0.25), transparent 45%), radial-gradient(circle at 85% 90%, rgba(236,72,153,0.2), transparent 45%), radial-gradient(circle at 50% 50%, rgba(139,92,246,0.12), transparent 60%), linear-gradient(135deg, #1a1d28, #0f1117)'
+      }} />
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
+      <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full opacity-20"
+        style={{ background: 'radial-gradient(circle, #3b82f6, transparent 70%)' }} />
+      <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full opacity-20"
+        style={{ background: 'radial-gradient(circle, #ec4899, transparent 70%)' }} />
+
       <div className="relative">
-        <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full text-xs bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] border border-[var(--accent-blue)]/30">
-          <span className="w-2 h-2 rounded-full bg-[var(--accent-blue)] animate-pulse" />
-          Lección integradora · autoguiada
+        <div className="inline-flex items-center gap-2 mb-5 px-3 py-1.5 rounded-full text-xs bg-[var(--accent-blue)]/10 text-[var(--accent-blue)] border border-[var(--accent-blue)]/40 backdrop-blur-sm">
+          <span className="relative flex w-2 h-2">
+            <span className="absolute inline-flex w-full h-full rounded-full bg-[var(--accent-blue)] opacity-75 animate-ping" />
+            <span className="relative inline-flex w-2 h-2 rounded-full bg-[var(--accent-blue)]" />
+          </span>
+          <span className="font-mono tracking-wider">LECCIÓN INTEGRADORA · AUTOGUIADA</span>
         </div>
-        <h1 className="text-3xl md:text-5xl font-bold text-[var(--text-heading)] mb-3 tracking-tight">
+        <h1 className="text-4xl md:text-6xl font-bold text-[var(--text-heading)] mb-4 tracking-tight leading-[1.05]">
           Todo lo que es un{' '}
-          <span className="bg-gradient-to-r from-[var(--accent-blue)] via-[var(--accent-purple)] to-[var(--accent-pink)] bg-clip-text text-transparent">
-            Sistema de Gestión de Bases de Datos
+          <span className="relative inline-block">
+            <span className="bg-gradient-to-r from-[var(--accent-blue)] via-[var(--accent-purple)] to-[var(--accent-pink)] bg-clip-text text-transparent">
+              Sistema de Gestión de Bases de Datos
+            </span>
+            <span className="absolute -inset-x-2 -inset-y-1 blur-2xl opacity-30 bg-gradient-to-r from-[var(--accent-blue)] via-[var(--accent-purple)] to-[var(--accent-pink)] -z-10" />
           </span>
         </h1>
-        <p className="text-base text-[var(--text-muted)] max-w-3xl leading-relaxed">
+        <p className="text-base md:text-lg text-[var(--text-muted)] max-w-3xl leading-relaxed">
           Un recorrido único por SQL, modelado, normalización, índices, transacciones, modelos de datos,
           RAG, plataformas modernas, gestión de proyectos y tendencias. Pensado para estudiarse de una
           sentada (3-6 horas) o por bloques.
         </p>
-        <div className="flex flex-wrap gap-3 mt-6 text-xs">
+        <div className="flex flex-wrap gap-3 mt-8 text-xs">
           <Stat label="Duración" value={`${h}h ${m}m`} />
           <Stat label="Secciones" value={String(SECTIONS.length)} />
-          <Stat label="Visuales interactivos" value="30+" />
-          <Stat label="Plataformas" value="16" />
+          <Stat label="Visuales interactivos" value="40+" />
+          <Stat label="Plataformas" value="20" />
+          <Stat label="Espacios" value="6" />
         </div>
-        <div className="mt-6">
-          <div className="flex justify-between text-xs text-[var(--text-muted)] mb-1">
-            <span>Progreso del resumen</span>
-            <span>{progress}%</span>
+        <div className="mt-7">
+          <div className="flex justify-between text-xs text-[var(--text-muted)] mb-2">
+            <span className="font-mono tracking-wider uppercase">Progreso del resumen</span>
+            <span className="font-mono font-semibold text-[var(--text-body)]">{progress}%</span>
           </div>
-          <div className="h-2 w-full rounded-full bg-[var(--bg-tertiary)] overflow-hidden">
+          <div className="h-2.5 w-full rounded-full bg-[var(--bg-tertiary)] overflow-hidden border border-[var(--border-color)]">
             <div
-              className="h-full bg-gradient-to-r from-[var(--accent-blue)] to-[var(--accent-purple)] transition-all duration-500"
+              className="h-full bg-gradient-to-r from-[var(--accent-blue)] via-[var(--accent-purple)] to-[var(--accent-pink)] transition-all duration-700 relative"
               style={{ width: `${progress}%` }}
-            />
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-[shimmer_2s_infinite]" />
+            </div>
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </header>
   );
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="px-3 py-2 rounded-lg bg-[var(--bg-tertiary)]/50 border border-[var(--border-color)]">
-      <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)]">{label}</div>
-      <div className="text-sm font-semibold text-[var(--text-heading)]">{value}</div>
+    <div className="px-4 py-2.5 rounded-lg bg-[var(--bg-tertiary)]/60 border border-[var(--border-color)] backdrop-blur-sm hover:border-[var(--accent-blue)]/50 transition-colors">
+      <div className="text-[10px] uppercase tracking-[0.15em] text-[var(--text-muted)] font-mono">{label}</div>
+      <div className="text-base font-bold text-[var(--text-heading)] font-mono">{value}</div>
     </div>
   );
 }
@@ -167,9 +193,13 @@ function Stat({ label, value }: { label: string; value: string }) {
 function TableOfContents({ active, completed }: { active: SectionId; completed: Set<SectionId> }) {
   return (
     <aside className="lg:sticky lg:top-20 h-fit">
-      <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] p-4">
-        <div className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
-          Contenido
+      <div className="rounded-xl border border-[var(--border-color)] bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-secondary)] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.2)]">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="h-px flex-1 bg-gradient-to-r from-[var(--accent-blue)] to-transparent" />
+          <div className="text-[10px] font-semibold text-[var(--text-muted)] uppercase tracking-[0.2em] font-mono">
+            Contenido
+          </div>
+          <div className="h-px flex-1 bg-gradient-to-l from-[var(--accent-blue)] to-transparent" />
         </div>
         <nav className="space-y-0.5">
           {SECTIONS.map((s, i) => {
@@ -179,21 +209,37 @@ function TableOfContents({ active, completed }: { active: SectionId; completed: 
               <a
                 key={s.id}
                 href={`#${s.id}`}
-                className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs transition-all ${
+                className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs transition-all relative ${
                   isActive
-                    ? 'bg-[var(--accent-blue)]/15 text-[var(--accent-blue)]'
+                    ? 'bg-gradient-to-r from-[var(--accent-blue)]/20 to-transparent text-[var(--accent-blue)]'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-body)] hover:bg-[var(--bg-tertiary)]'
                 }`}
               >
-                <span className="w-5 h-5 flex items-center justify-center rounded text-[10px] font-mono shrink-0 border border-[var(--border-color)]">
+                {isActive && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-4 rounded-r bg-[var(--accent-blue)]" />
+                )}
+                <span className={`w-5 h-5 flex items-center justify-center rounded text-[9px] font-mono font-bold shrink-0 border ${
+                  isDone ? 'border-[var(--success)] bg-[var(--success)]/10 text-[var(--success)]' :
+                  isActive ? 'border-[var(--accent-blue)] bg-[var(--accent-blue)]/15 text-[var(--accent-blue)]' :
+                  'border-[var(--border-color)] text-[var(--text-muted)]'
+                }`}>
                   {isDone ? '✓' : i + 1}
                 </span>
                 <span className="truncate">{s.label}</span>
-                <span className="ml-auto text-[10px] text-[var(--text-muted)]">{s.minutes}'</span>
+                <span className="ml-auto text-[9px] text-[var(--text-muted)] font-mono shrink-0">{s.minutes}m</span>
               </a>
             );
           })}
         </nav>
+        <div className="mt-3 pt-3 border-t border-[var(--border-color)]">
+          <div className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)]">
+            <span>Avance</span>
+            <span className="text-[var(--text-heading)]">{completed.size}/{SECTIONS.length}</span>
+          </div>
+          <div className="h-1 rounded-full bg-[var(--bg-tertiary)] mt-1 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[var(--accent-blue)] to-[var(--accent-pink)] transition-all" style={{ width: `${(completed.size / SECTIONS.length) * 100}%` }} />
+          </div>
+        </div>
       </div>
     </aside>
   );
@@ -222,20 +268,24 @@ function Section({
 }) {
   return (
     <section id={id} className="scroll-mt-20">
-      <div className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-[var(--border-color)]">
+      <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-[var(--border-color)] relative">
+        <div className="absolute -top-px left-0 h-px w-20 bg-gradient-to-r from-[var(--accent-blue)] to-transparent" />
         <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-[var(--accent-blue)] mb-2">{kicker}</div>
-          <h2 className="text-2xl md:text-3xl font-bold text-[var(--text-heading)] tracking-tight">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="h-px w-8 bg-[var(--accent-blue)]" />
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[var(--accent-blue)] font-mono font-semibold">{kicker}</div>
+          </div>
+          <h2 className="text-2xl md:text-4xl font-bold text-[var(--text-heading)] tracking-tight leading-tight">
             {title}
           </h2>
-          <p className="text-sm text-[var(--text-muted)] mt-2 max-w-3xl">{subtitle}</p>
+          <p className="text-sm md:text-base text-[var(--text-muted)] mt-3 max-w-3xl leading-relaxed">{subtitle}</p>
         </div>
         <button
           onClick={onDone}
-          className={`shrink-0 text-xs px-3 py-1.5 rounded-md border transition-all ${
+          className={`shrink-0 text-xs px-3 py-1.5 rounded-md border transition-all font-mono ${
             done
-              ? 'bg-[var(--success)]/10 border-[var(--success)]/40 text-[var(--success)]'
-              : 'border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)]'
+              ? 'bg-[var(--success)]/15 border-[var(--success)]/50 text-[var(--success)] shadow-[0_0_15px_rgba(16,185,129,0.2)]'
+              : 'border-[var(--border-color)] text-[var(--text-muted)] hover:border-[var(--accent-blue)] hover:text-[var(--accent-blue)] hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]'
           }`}
         >
           {done ? '✓ Completado' : 'Marcar como leído'}
@@ -249,7 +299,7 @@ function Section({
 function Card({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] p-5 ${className}`}
+      className={`relative rounded-xl border border-[var(--border-color)] bg-gradient-to-b from-[var(--bg-card)] to-[var(--bg-secondary)] p-5 shadow-[0_4px_20px_rgba(0,0,0,0.2)] ${className}`}
     >
       {children}
     </div>
@@ -426,26 +476,35 @@ function Intro({ onDone, done }: { onDone: () => void; done: boolean }) {
 
 function JourneyMap() {
   const layers = [
-    { k: 'Fundamentos', items: ['SQL', 'Entidad-Relación', 'Normalización', 'JOINs'] },
-    { k: 'Interno del motor', items: ['Índices', 'ACID', 'Planes de ejecución'] },
-    { k: 'Arquitectura', items: ['OLTP / OLAP', 'NoSQL', 'Lakehouse', 'Vectoriales'] },
-    { k: 'Aplicación', items: ['RAG', 'Plataformas', 'Gestión de datos', 'Tendencias'] },
+    { k: 'Fundamentos', items: ['SQL', 'Entidad-Relación', 'Normalización', 'JOINs'], color: '#3b82f6' },
+    { k: 'Interno del motor', items: ['Índices', 'ACID', 'Planes de ejecución'], color: '#8b5cf6' },
+    { k: 'Arquitectura', items: ['OLTP / OLAP', 'NoSQL', 'Lakehouse', 'Vectoriales'], color: '#ec4899' },
+    { k: 'Aplicación', items: ['RAG', 'Plataformas', 'Espacios', 'Tendencias'], color: '#10b981' },
   ];
   return (
     <div className="relative">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+      {/* Línea conectora */}
+      <div className="hidden md:block absolute top-4 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-[#3b82f6] via-[#8b5cf6] via-[#ec4899] to-[#10b981] opacity-40" />
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
         {layers.map((l, i) => (
           <div key={l.k} className="relative">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-6 h-6 rounded-full bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-purple)] text-white text-[10px] font-bold flex items-center justify-center">
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className="relative w-8 h-8 rounded-full text-white text-xs font-bold flex items-center justify-center shrink-0"
+                style={{
+                  background: `linear-gradient(135deg, ${l.color}, ${l.color}88)`,
+                  boxShadow: `0 0 15px ${l.color}66`,
+                }}
+              >
                 {i + 1}
+                <span className="absolute inset-0 rounded-full opacity-30 animate-pulse" style={{ background: l.color }} />
               </span>
-              <span className="text-xs font-semibold text-[var(--text-heading)]">{l.k}</span>
+              <span className="text-sm font-bold text-[var(--text-heading)]">{l.k}</span>
             </div>
-            <div className="space-y-1 pl-8">
+            <div className="rounded-lg p-3 space-y-1.5" style={{ background: `${l.color}0a`, border: `1px solid ${l.color}33` }}>
               {l.items.map((it) => (
-                <div key={it} className="text-xs text-[var(--text-muted)] flex items-center gap-2">
-                  <span className="w-1 h-1 rounded-full bg-[var(--accent-purple)]" />
+                <div key={it} className="text-xs text-[var(--text-body)] flex items-center gap-2">
+                  <span className="w-1 h-1 rounded-full shrink-0" style={{ background: l.color }} />
                   {it}
                 </div>
               ))}
@@ -2277,17 +2336,31 @@ function Plataformas({ onDone, done }: { onDone: () => void; done: boolean }) {
 }
 
 function PlatformCard({ p }: { p: { slug: string; name: string; cat: string; color: string; tagline: string; note: string } }) {
+  const isHighlight = p.slug === 'postgres' || p.slug === 'mongodb';
   return (
-    <div className="rounded-xl border border-[var(--border-color)] bg-[var(--bg-card)] overflow-hidden card-hover">
+    <div
+      className="relative rounded-xl border overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+      style={{
+        borderColor: isHighlight ? `${p.color}66` : 'var(--border-color)',
+        background: 'var(--bg-card)',
+        boxShadow: isHighlight ? `0 8px 24px ${p.color}22, 0 0 0 1px ${p.color}22` : '0 4px 16px rgba(0,0,0,0.15)',
+      }}
+    >
+      {isHighlight && (
+        <div className="absolute top-2 right-2 z-10 px-2 py-0.5 rounded-full text-[9px] font-bold text-white uppercase tracking-wider" style={{ background: p.color }}>
+          Destacado
+        </div>
+      )}
       <PlatformPreview slug={p.slug} color={p.color} name={p.name} />
-      <div className="p-4">
-        <div className="flex items-baseline justify-between mb-1">
-          <div className="text-sm font-semibold text-[var(--text-heading)]">{p.name}</div>
-          <div className="text-[10px] font-mono uppercase tracking-wider" style={{ color: p.color }}>
+      <div className="p-4 relative">
+        <div className="absolute top-0 left-0 right-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${p.color}66, transparent)` }} />
+        <div className="flex items-baseline justify-between mb-1.5">
+          <div className="text-sm font-bold text-[var(--text-heading)]">{p.name}</div>
+          <div className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded" style={{ color: p.color, background: `${p.color}15` }}>
             {p.cat}
           </div>
         </div>
-        <div className="text-xs text-[var(--text-muted)] mb-2">{p.tagline}</div>
+        <div className="text-xs text-[var(--text-muted)] mb-2 italic">{p.tagline}</div>
         <div className="text-[11px] text-[var(--text-body)] leading-relaxed">{p.note}</div>
       </div>
     </div>
@@ -2296,17 +2369,47 @@ function PlatformCard({ p }: { p: { slug: string; name: string; cat: string; col
 
 function PlatformPreview({ slug, color, name }: { slug: string; color: string; name: string }) {
   // Mini mocks de UI distintivos de cada plataforma
-  if (slug === 'postgres' || slug === 'pgvector') {
+  if (slug === 'postgres') {
     return (
-      <div className="h-32 p-3 flex flex-col justify-between" style={{ background: `linear-gradient(135deg, ${color}dd, ${color}99)` }}>
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-white/30" />
-          <div className="text-[10px] font-mono text-white/90">postgres=#</div>
+      <div className="h-36 p-3 flex flex-col relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #336791 0%, #1e3f5c 100%)' }}>
+        <div className="absolute -right-6 -top-6 w-24 h-24 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, white, transparent 70%)' }} />
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="white">
+              <path d="M20.9 11.1c-.5-1.5-1.6-2.4-3-2.4-.7 0-1.4.2-2 .5.1-1 .1-2-.1-2.9-.4-1.6-1.4-2.8-2.7-3.3-1.3-.5-2.8-.3-4 .6-1.2.8-2 2.2-2.2 3.7-.1.9-.1 1.8 0 2.6-.3-.2-.7-.3-1.1-.4-1.5-.1-2.8.7-3.5 2-.6 1.3-.4 2.8.5 4 .9 1.2 2.3 1.7 3.6 1.5z" />
+            </svg>
+          </div>
+          <div>
+            <div className="text-[11px] font-bold text-white">PostgreSQL</div>
+            <div className="text-[9px] text-white/60 font-mono">v17.2 · ACID · MVCC</div>
+          </div>
         </div>
-        <div className="font-mono text-[10px] text-white/90 leading-tight">
-          SELECT version();<br />
-          PostgreSQL 17.2<br />
-          {slug === 'pgvector' && <><br />SELECT * FROM items<br />ORDER BY emb &lt;=&gt; $1;</>}
+        <div className="font-mono text-[9px] text-white/90 leading-snug bg-black/25 rounded p-1.5 mt-auto">
+          <div><span className="text-[#8be9fd]">SELECT</span> nombre, total</div>
+          <div><span className="text-[#8be9fd]">FROM</span> pedidos p</div>
+          <div><span className="text-[#8be9fd]">JOIN</span> clientes c <span className="text-[#8be9fd]">ON</span> ...</div>
+          <div className="text-[#50fa7b]">↳ 1,248 rows · 42 ms</div>
+        </div>
+      </div>
+    );
+  }
+  if (slug === 'pgvector') {
+    return (
+      <div className="h-36 p-3 flex flex-col relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #336791 0%, #0092DB 100%)' }}>
+        <div className="flex items-center justify-between mb-2">
+          <div className="text-[11px] font-bold text-white">pgvector</div>
+          <div className="text-[9px] text-white/70 font-mono">ext · PG 17</div>
+        </div>
+        <div className="font-mono text-[9px] text-white/90 bg-black/25 rounded p-1.5">
+          <div><span className="text-[#ff79c6]">CREATE INDEX</span> ON items</div>
+          <div className="pl-2"><span className="text-[#ff79c6]">USING</span> hnsw (emb vector_cosine_ops);</div>
+          <div className="mt-1"><span className="text-[#ff79c6]">SELECT</span> * <span className="text-[#ff79c6]">FROM</span> items</div>
+          <div className="pl-2"><span className="text-[#ff79c6]">ORDER BY</span> emb &lt;=&gt; $1 <span className="text-[#ff79c6]">LIMIT</span> 5;</div>
+        </div>
+        <div className="mt-auto flex items-end gap-0.5 h-5">
+          {[40, 70, 30, 85, 50, 65, 45, 75, 35, 90, 55].map((h, i) => (
+            <div key={i} className="flex-1 rounded-t bg-white/40" style={{ height: `${h}%` }} />
+          ))}
         </div>
       </div>
     );
@@ -2483,17 +2586,29 @@ function PlatformPreview({ slug, color, name }: { slug: string; color: string; n
   }
   if (slug === 'mongodb') {
     return (
-      <div className="h-32 p-3 bg-gradient-to-br from-[#00ED64] via-[#0A3622] to-[#052817]">
-        <div className="flex items-center gap-2 mb-1">
-          <div className="w-4 h-4 rounded bg-[#00ED64]" />
-          <div className="text-xs font-semibold text-white">MongoDB Atlas</div>
+      <div className="h-36 p-3 flex flex-col relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #001E2B 0%, #00684A 100%)' }}>
+        <div className="absolute -right-4 -top-4 opacity-30">
+          <svg viewBox="0 0 24 24" width="60" height="60" fill="#00ED64">
+            <path d="M12 2c-.4 3.5 1 6.9 2.9 9.6 1.5 2.2 2.1 4.8 1.4 7.4-.6 2.1-2.1 3.9-4.3 4.7v-2.3c.1-2.3.6-4.5 1.3-6.6.4-1.2.3-2.5-.3-3.7-.5-1.1-1.2-2.1-2-3-.6-.6-1.3-1.2-1.8-1.9-1.4-2-1.7-4.5-.8-6.7.3-.8.9-1.5 1.6-2 .3.2.7.3 1 .5z" />
+          </svg>
         </div>
-        <div className="font-mono text-[9px] text-[#B8F4C8] leading-tight mt-2">
-          {'{'}<br />
-          &nbsp;&nbsp;_id: ObjectId(...),<br />
-          &nbsp;&nbsp;user: &quot;maria&quot;,<br />
-          &nbsp;&nbsp;items: [&nbsp;...&nbsp;]<br />
-          {'}'}
+        <div className="flex items-center gap-2 mb-2">
+          <div className="w-7 h-7 rounded-full bg-[#00ED64]/20 flex items-center justify-center border border-[#00ED64]/40">
+            <svg viewBox="0 0 24 24" width="14" height="16" fill="#00ED64">
+              <path d="M12 2c-.4 3.5 1 6.9 2.9 9.6 1.5 2.2 2.1 4.8 1.4 7.4-.6 2.1-2.1 3.9-4.3 4.7v-2.3c.1-2.3.6-4.5 1.3-6.6z" />
+            </svg>
+          </div>
+          <div>
+            <div className="text-[11px] font-bold text-white">MongoDB Atlas</div>
+            <div className="text-[9px] text-white/60 font-mono">Document · BSON · v8.0</div>
+          </div>
+        </div>
+        <div className="font-mono text-[9px] text-white/90 bg-black/30 rounded p-1.5 mt-auto">
+          <div className="text-[#00ED64]">db.pedidos.aggregate([</div>
+          <div className="pl-2">&#123; <span className="text-[#fbbf24]">$match</span>: &#123; pais: <span className="text-[#bd93f9]">&apos;CO&apos;</span> &#125; &#125;,</div>
+          <div className="pl-2">&#123; <span className="text-[#fbbf24]">$group</span>: &#123; _id: &apos;$user&apos;, t: &#123;$sum:&apos;$total&apos;&#125; &#125; &#125;</div>
+          <div className="text-[#00ED64]">]);</div>
+          <div className="text-[#50fa7b] mt-0.5">↳ 340 docs · 38 ms</div>
         </div>
       </div>
     );
@@ -3043,5 +3158,889 @@ function Cierre({ onDone, done, completed }: { onDone: () => void; done: boolean
         </div>
       </Card>
     </Section>
+  );
+}
+
+// ==============================================================
+// S10.5 — ESPACIOS: misma lógica, distintas interfaces
+// ==============================================================
+
+function Espacios({ onDone, done }: { onDone: () => void; done: boolean }) {
+  return (
+    <Section
+      id="espacios"
+      kicker="Módulo 11"
+      title="Espacios: cómo se ve por dentro cada plataforma"
+      subtitle="Aunque los logos, sintaxis y dashboards cambien, la lógica conceptual es casi siempre la misma: guardas datos, los consultas por clave, filtras, agrupas, ordenas. Una vez entiendes eso, cambiar de herramienta es aprender un dialecto."
+      onDone={onDone}
+      done={done}
+    >
+      <PostgresVsMongo />
+      <DialectTranslator />
+      <WorkspaceMockups />
+      <LogicaUnificada />
+    </Section>
+  );
+}
+
+// ---- Postgres vs Mongo: la MISMA pregunta, dos mundos ----
+
+function PostgresVsMongo() {
+  const questions = [
+    {
+      k: 'lectura',
+      label: 'Leer los 3 últimos pedidos del cliente 42',
+      sql: `SELECT id, fecha, total\nFROM pedidos\nWHERE cliente_id = 42\nORDER BY fecha DESC\nLIMIT 3;`,
+      mongo: `db.pedidos.find(\n  { cliente_id: 42 }\n)\n.sort({ fecha: -1 })\n.limit(3);`,
+    },
+    {
+      k: 'insert',
+      label: 'Insertar un pedido nuevo',
+      sql: `INSERT INTO pedidos\n  (cliente_id, total, fecha)\nVALUES\n  (42, 4800, NOW())\nRETURNING id;`,
+      mongo: `db.pedidos.insertOne({\n  cliente_id: 42,\n  total: 4800,\n  fecha: new Date()\n});`,
+    },
+    {
+      k: 'update',
+      label: 'Marcar un pedido como pagado',
+      sql: `UPDATE pedidos\nSET estado = 'pagado'\nWHERE id = 1001;`,
+      mongo: `db.pedidos.updateOne(\n  { _id: 1001 },\n  { $set: { estado: 'pagado' } }\n);`,
+    },
+    {
+      k: 'agregacion',
+      label: 'Total vendido por país en abril',
+      sql: `SELECT pais, SUM(total) AS ventas\nFROM pedidos\nWHERE fecha >= '2026-04-01'\nGROUP BY pais\nORDER BY ventas DESC;`,
+      mongo: `db.pedidos.aggregate([\n  { $match: {\n    fecha: { $gte: ISODate('2026-04-01') }\n  }},\n  { $group: {\n    _id: '$pais',\n    ventas: { $sum: '$total' }\n  }},\n  { $sort: { ventas: -1 } }\n]);`,
+    },
+    {
+      k: 'join',
+      label: 'Nombre del cliente + sus pedidos',
+      sql: `SELECT c.nombre, p.id, p.total\nFROM clientes c\nJOIN pedidos p\n  ON p.cliente_id = c.id\nWHERE c.pais = 'CO';`,
+      mongo: `db.clientes.aggregate([\n  { $match: { pais: 'CO' } },\n  { $lookup: {\n    from: 'pedidos',\n    localField: '_id',\n    foreignField: 'cliente_id',\n    as: 'pedidos'\n  }}\n]);`,
+    },
+  ];
+  const [q, setQ] = useState(0);
+  const current = questions[q];
+
+  return (
+    <Card>
+      <div className="flex items-start justify-between flex-wrap gap-3 mb-4">
+        <div>
+          <h3 className="text-base font-bold text-[var(--text-heading)] mb-1 flex items-center gap-2">
+            <span className="w-6 h-6 rounded-md bg-gradient-to-br from-[#336791] to-[#00ED64] flex items-center justify-center text-white text-[10px] font-bold">⇄</span>
+            PostgreSQL ⇄ MongoDB: la misma pregunta, dos mundos
+          </h3>
+          <p className="text-xs text-[var(--text-muted)]">
+            Relacional vs documento. Distinta sintaxis, misma intención.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {questions.map((qq, i) => (
+          <button
+            key={qq.k}
+            onClick={() => setQ(i)}
+            className={`text-xs px-3 py-1.5 rounded-md border transition-all ${
+              q === i
+                ? 'bg-gradient-to-r from-[#336791]/20 to-[#00ED64]/20 text-[var(--text-heading)] border-[var(--accent-blue)]'
+                : 'text-[var(--text-muted)] border-[var(--border-color)] hover:text-[var(--text-body)]'
+            }`}
+          >
+            {qq.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-3">
+        <PlatformPanel
+          brand="PostgreSQL"
+          logo={<PgElephantLogo />}
+          color="#336791"
+          tag="Relacional · Tablas · SQL"
+          code={current.sql}
+          lang="sql"
+        />
+        <PlatformPanel
+          brand="MongoDB"
+          logo={<MongoLeafLogo />}
+          color="#00ED64"
+          tag="Documental · Colecciones · MQL"
+          code={current.mongo}
+          lang="js"
+        />
+      </div>
+
+      <div className="mt-4 grid md:grid-cols-3 gap-2 text-[11px]">
+        <ComparePill k="Estructura" pg="Tabla con esquema fijo" mg="Colección de documentos JSON" />
+        <ComparePill k="Llave primaria" pg="PRIMARY KEY (numérica)" mg="_id (ObjectId por defecto)" />
+        <ComparePill k="Relacionar" pg="JOIN por llave foránea" mg="$lookup o documentos embebidos" />
+        <ComparePill k="Filtrar" pg="WHERE columna = valor" mg="{ campo: valor }" />
+        <ComparePill k="Agregar" pg="GROUP BY + SUM/AVG/COUNT" mg="aggregate([$group, $sum])" />
+        <ComparePill k="Transacciones" pg="BEGIN/COMMIT nativo" mg="session.withTransaction (desde 4.0)" />
+      </div>
+    </Card>
+  );
+}
+
+function PlatformPanel({ brand, logo, color, tag, code, lang }: { brand: string; logo: React.ReactNode; color: string; tag: string; code: string; lang: string }) {
+  return (
+    <div className="rounded-xl border overflow-hidden" style={{ borderColor: `${color}55`, boxShadow: `0 0 20px ${color}15` }}>
+      <div className="px-4 py-3 flex items-center gap-3" style={{ background: `linear-gradient(135deg, ${color}33, ${color}0a)`, borderBottom: `1px solid ${color}33` }}>
+        <div className="shrink-0">{logo}</div>
+        <div className="flex-1">
+          <div className="text-sm font-bold" style={{ color }}>{brand}</div>
+          <div className="text-[10px] text-[var(--text-muted)] font-mono">{tag}</div>
+        </div>
+      </div>
+      <div className="p-0">
+        <CodeBlock code={code} lang={lang} />
+      </div>
+    </div>
+  );
+}
+
+function ComparePill({ k, pg, mg }: { k: string; pg: string; mg: string }) {
+  return (
+    <div className="rounded-lg border border-[var(--border-color)] p-2.5 bg-[var(--bg-tertiary)]/40">
+      <div className="text-[10px] uppercase tracking-wider text-[var(--text-muted)] mb-1 font-mono">{k}</div>
+      <div className="flex items-start gap-1.5">
+        <div className="w-1 h-1 mt-1 rounded-full shrink-0" style={{ background: '#336791' }} />
+        <div className="text-[var(--text-body)] leading-tight">{pg}</div>
+      </div>
+      <div className="flex items-start gap-1.5 mt-1">
+        <div className="w-1 h-1 mt-1 rounded-full shrink-0" style={{ background: '#00ED64' }} />
+        <div className="text-[var(--text-body)] leading-tight">{mg}</div>
+      </div>
+    </div>
+  );
+}
+
+function PgElephantLogo() {
+  return (
+    <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #336791, #1e3f5c)' }}>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="white">
+        <path d="M20.9 11.1c-.5-1.5-1.6-2.4-3-2.4-.7 0-1.4.2-2 .5.1-1 .1-2-.1-2.9-.4-1.6-1.4-2.8-2.7-3.3-1.3-.5-2.8-.3-4 .6-1.2.8-2 2.2-2.2 3.7-.1.9-.1 1.8 0 2.6-.3-.2-.7-.3-1.1-.4-1.5-.1-2.8.7-3.5 2-.6 1.3-.4 2.8.5 4 .9 1.2 2.3 1.7 3.6 1.5-.2.5-.3 1.1-.2 1.7.2 1.2 1 2.3 2.1 2.8 1.1.5 2.4.4 3.5-.2.2.6.5 1.2 1 1.6 1 1 2.3 1.3 3.6 1 1.3-.3 2.3-1.2 2.8-2.5.2-.5.3-1 .3-1.6.5.2 1 .3 1.5.2 1.3-.2 2.3-1.1 2.7-2.3.5-1.3.2-2.7-.8-3.8z" />
+      </svg>
+    </div>
+  );
+}
+
+function MongoLeafLogo() {
+  return (
+    <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #00ED64, #006B2E)' }}>
+      <svg viewBox="0 0 24 24" width="18" height="22" fill="white">
+        <path d="M12 2c-.4 3.5 1 6.9 2.9 9.6 1.5 2.2 2.1 4.8 1.4 7.4-.6 2.1-2.1 3.9-4.3 4.7v-2.3c.1-2.3.6-4.5 1.3-6.6.4-1.2.3-2.5-.3-3.7-.5-1.1-1.2-2.1-2-3-.6-.6-1.3-1.2-1.8-1.9-1.4-2-1.7-4.5-.8-6.7.3-.8.9-1.5 1.6-2 .3.2.7.3 1 .5 1-.2 1.4 2.4 1 4z" opacity=".9" />
+      </svg>
+    </div>
+  );
+}
+
+// ---- Traductor de dialectos: 4 lenguajes, misma pregunta ----
+
+function DialectTranslator() {
+  const [q] = useState('Top 5 productos más vendidos');
+  return (
+    <Card>
+      <h3 className="text-base font-bold text-[var(--text-heading)] mb-1">
+        El mismo "top 5" escrito en 4 mundos distintos
+      </h3>
+      <p className="text-xs text-[var(--text-muted)] mb-5">
+        Pregunta: <strong className="text-[var(--text-body)]">{q}</strong>. Observa cómo el qué es idéntico; lo único que cambia es la envoltura.
+      </p>
+      <div className="grid md:grid-cols-2 gap-3">
+        <DialectCard
+          brand="PostgreSQL"
+          color="#336791"
+          lang="sql"
+          code={`SELECT producto_id,\n  SUM(cantidad) AS unidades\nFROM detalle_pedidos\nGROUP BY producto_id\nORDER BY unidades DESC\nLIMIT 5;`}
+        />
+        <DialectCard
+          brand="MongoDB"
+          color="#00ED64"
+          lang="js"
+          code={`db.detalle_pedidos.aggregate([\n  { $group: {\n      _id: '$producto_id',\n      unidades: { $sum: '$cantidad' }\n  }},\n  { $sort: { unidades: -1 } },\n  { $limit: 5 }\n]);`}
+        />
+        <DialectCard
+          brand="Snowflake SQL"
+          color="#29B5E8"
+          lang="sql"
+          code={`SELECT producto_id,\n  SUM(cantidad) AS unidades\nFROM detalle_pedidos\nGROUP BY producto_id\nQUALIFY ROW_NUMBER()\n  OVER (ORDER BY unidades DESC) <= 5;`}
+        />
+        <DialectCard
+          brand="Redis (sorted set)"
+          color="#DC382D"
+          lang="js"
+          code={`// Al registrar venta:\nZINCRBY ventas:producto 1 "SKU-42"\n\n// Top 5:\nZREVRANGE ventas:producto\n  0 4 WITHSCORES\n// → ["SKU-42", "87", "SKU-3", "64", ...]`}
+        />
+      </div>
+      <Callout kind="tip" title="La lección">
+        La decisión de qué motor usar casi nunca es por sintaxis. Es por el modelo de datos
+        (relacional / documento / clave-valor / columnar), la escala, la latencia, el costo y el
+        ecosistema. El SQL lo aprendes una vez.
+      </Callout>
+    </Card>
+  );
+}
+
+function DialectCard({ brand, color, lang, code }: { brand: string; color: string; lang: string; code: string }) {
+  return (
+    <div className="rounded-xl border overflow-hidden" style={{ borderColor: `${color}55` }}>
+      <div className="flex items-center justify-between px-4 py-2" style={{ background: `linear-gradient(90deg, ${color}22, transparent)`, borderBottom: `1px solid ${color}33` }}>
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 8px ${color}` }} />
+          <div className="text-xs font-semibold" style={{ color }}>{brand}</div>
+        </div>
+        <div className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider">{lang}</div>
+      </div>
+      <CodeBlock code={code} lang={lang} />
+    </div>
+  );
+}
+
+// ---- Workspace Mockups (pgAdmin, Mongo Compass, Snowsight, Supabase Studio, Atlas Search, Redis Insight) ----
+
+function WorkspaceMockups() {
+  const [view, setView] = useState<'pgadmin' | 'compass' | 'snowsight' | 'supabase' | 'atlas' | 'insight'>('pgadmin');
+
+  const views = {
+    pgadmin: { label: 'pgAdmin', brand: 'PostgreSQL', color: '#336791' },
+    compass: { label: 'MongoDB Compass', brand: 'MongoDB', color: '#00ED64' },
+    snowsight: { label: 'Snowsight', brand: 'Snowflake', color: '#29B5E8' },
+    supabase: { label: 'Supabase Studio', brand: 'Supabase', color: '#3ECF8E' },
+    atlas: { label: 'Atlas Search', brand: 'MongoDB Atlas', color: '#00ED64' },
+    insight: { label: 'Redis Insight', brand: 'Redis', color: '#DC382D' },
+  };
+
+  return (
+    <Card>
+      <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
+        <div>
+          <h3 className="text-base font-bold text-[var(--text-heading)] mb-1">
+            Los espacios reales donde vive el trabajo
+          </h3>
+          <p className="text-xs text-[var(--text-muted)]">
+            Cada plataforma tiene un "estudio" propio. Cambia la pestaña y fíjate que los bloques son
+            parecidos: explorador de datos, editor, resultados, métricas.
+          </p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-1.5 mb-4">
+        {(Object.keys(views) as Array<keyof typeof views>).map((k) => (
+          <button
+            key={k}
+            onClick={() => setView(k)}
+            className={`text-xs px-3 py-1.5 rounded-md border transition-all flex items-center gap-2 ${
+              view === k ? 'text-white' : 'text-[var(--text-muted)] hover:text-[var(--text-body)]'
+            }`}
+            style={
+              view === k
+                ? { background: views[k].color, borderColor: views[k].color, boxShadow: `0 0 12px ${views[k].color}55` }
+                : { borderColor: 'var(--border-color)' }
+            }
+          >
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: view === k ? 'white' : views[k].color }} />
+            {views[k].label}
+          </button>
+        ))}
+      </div>
+
+      <div className="rounded-xl overflow-hidden border border-[var(--border-color)]" style={{ boxShadow: `0 8px 30px ${views[view].color}20` }}>
+        {view === 'pgadmin' && <PgAdminMock />}
+        {view === 'compass' && <CompassMock />}
+        {view === 'snowsight' && <SnowsightMock />}
+        {view === 'supabase' && <SupabaseMock />}
+        {view === 'atlas' && <AtlasSearchMock />}
+        {view === 'insight' && <RedisInsightMock />}
+      </div>
+
+      <div className="mt-3 text-[11px] text-[var(--text-muted)] flex items-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-blue)] animate-pulse" />
+        Los mockups son recreaciones simplificadas para comparar estructura; cada herramienta real tiene muchas más opciones.
+      </div>
+    </Card>
+  );
+}
+
+// ========= MOCK: pgAdmin =========
+function PgAdminMock() {
+  return (
+    <div className="bg-white text-gray-800" style={{ minHeight: 400 }}>
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#f4f4f4] border-b border-gray-300">
+        <div className="flex gap-1.5">
+          <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+          <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+          <div className="w-3 h-3 rounded-full bg-[#27ca40]" />
+        </div>
+        <div className="text-[11px] text-gray-600 ml-2 font-semibold">pgAdmin 4 · PostgreSQL 17</div>
+      </div>
+      {/* Menu bar */}
+      <div className="px-3 py-1 bg-[#ebf0f5] border-b border-gray-300 text-[11px] text-gray-700 flex gap-4">
+        <span>File</span><span>Object</span><span>Tools</span><span>Help</span>
+      </div>
+      {/* Body */}
+      <div className="grid grid-cols-[220px_1fr] min-h-[360px]">
+        {/* Sidebar */}
+        <div className="bg-[#f7f9fb] border-r border-gray-300 p-2 text-[11px]">
+          <div className="text-gray-500 uppercase tracking-wider text-[9px] mb-1">Servers</div>
+          <TreeLine icon="🖥" label="Local (5432)" open />
+          <TreeLine icon="🗄" label="postgres" indent={1} open />
+          <TreeLine icon="📁" label="Schemas" indent={2} open />
+          <TreeLine icon="📁" label="public" indent={3} open highlight />
+          <TreeLine icon="📂" label="Tables (4)" indent={4} open />
+          <TreeLine icon="🧾" label="clientes" indent={5} />
+          <TreeLine icon="🧾" label="pedidos" indent={5} active />
+          <TreeLine icon="🧾" label="productos" indent={5} />
+          <TreeLine icon="🧾" label="detalle_pedidos" indent={5} />
+          <TreeLine icon="📂" label="Views (2)" indent={4} />
+          <TreeLine icon="📂" label="Indexes (6)" indent={4} />
+          <TreeLine icon="📂" label="Functions" indent={4} />
+        </div>
+        {/* Main */}
+        <div className="flex flex-col">
+          {/* Tabs */}
+          <div className="bg-[#f7f9fb] border-b border-gray-300 px-2 flex items-end gap-0 text-[11px]">
+            <div className="px-3 py-1.5 border-t-2 border-t-[#336791] bg-white">Query</div>
+            <div className="px-3 py-1.5 text-gray-500">Data</div>
+            <div className="px-3 py-1.5 text-gray-500">Dependencies</div>
+          </div>
+          {/* Query area */}
+          <div className="p-3 bg-white font-mono text-[11px] border-b border-gray-200">
+            <div className="text-gray-400 italic">-- Pedidos recientes por cliente</div>
+            <div><span className="text-[#0000ff]">SELECT</span> c.nombre, <span className="text-[#9c27b0]">COUNT</span>(p.id) <span className="text-[#0000ff]">AS</span> pedidos,</div>
+            <div className="pl-4"><span className="text-[#9c27b0]">SUM</span>(p.total) <span className="text-[#0000ff]">AS</span> total</div>
+            <div><span className="text-[#0000ff]">FROM</span> clientes c</div>
+            <div><span className="text-[#0000ff]">JOIN</span> pedidos p <span className="text-[#0000ff]">ON</span> p.cliente_id = c.id</div>
+            <div><span className="text-[#0000ff]">WHERE</span> p.fecha {'>='} <span className="text-[#e91e63]">&apos;2026-04-01&apos;</span></div>
+            <div><span className="text-[#0000ff]">GROUP BY</span> c.nombre</div>
+            <div><span className="text-[#0000ff]">ORDER BY</span> total <span className="text-[#0000ff]">DESC</span></div>
+            <div><span className="text-[#0000ff]">LIMIT</span> <span className="text-[#2196f3]">10</span>;</div>
+          </div>
+          {/* Results */}
+          <div className="flex-1 bg-white">
+            <div className="text-[10px] text-gray-500 px-3 py-1 bg-[#f7f9fb] border-b border-gray-200 flex items-center gap-4">
+              <span className="text-green-600">✓ 10 rows</span>
+              <span>·</span>
+              <span>Query returned successfully in 42 ms</span>
+            </div>
+            <table className="w-full text-[10px] border-collapse">
+              <thead>
+                <tr className="bg-[#f7f9fb] text-gray-700">
+                  <th className="text-left px-3 py-1 border-b border-gray-200">nombre</th>
+                  <th className="text-left px-3 py-1 border-b border-gray-200">pedidos</th>
+                  <th className="text-left px-3 py-1 border-b border-gray-200">total</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-800">
+                {[
+                  ['María Gómez', 14, 6480000],
+                  ['Andrés Ruiz', 9, 4120000],
+                  ['Laura Vidal', 7, 3890000],
+                  ['Pedro Ariza', 6, 2540000],
+                  ['Sofía Peña', 5, 2310000],
+                ].map((r, i) => (
+                  <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#f9fafb]'}>
+                    <td className="px-3 py-1 border-b border-gray-100">{r[0]}</td>
+                    <td className="px-3 py-1 border-b border-gray-100">{r[1]}</td>
+                    <td className="px-3 py-1 border-b border-gray-100 font-mono">${(r[2] as number).toLocaleString('es-CO')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TreeLine({ icon, label, indent = 0, open, active, highlight }: { icon: string; label: string; indent?: number; open?: boolean; active?: boolean; highlight?: boolean }) {
+  return (
+    <div
+      className={`flex items-center gap-1 py-0.5 px-1 rounded text-[11px] ${
+        active ? 'bg-[#336791]/20 text-[#1a3f5c] font-semibold' : highlight ? 'text-gray-800 font-semibold' : 'text-gray-700'
+      }`}
+      style={{ paddingLeft: `${indent * 10 + 4}px` }}
+    >
+      <span className="text-gray-400 text-[8px]">{open ? '▼' : '▶'}</span>
+      <span>{icon}</span>
+      <span className="truncate">{label}</span>
+    </div>
+  );
+}
+
+// ========= MOCK: MongoDB Compass =========
+function CompassMock() {
+  return (
+    <div className="bg-[#f5f6f7] text-gray-800" style={{ minHeight: 400 }}>
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#0f1b0a] border-b border-gray-800">
+        <div className="w-5 h-5 rounded bg-[#00ED64] flex items-center justify-center">
+          <svg width="10" height="12" viewBox="0 0 24 24" fill="#0f1b0a"><path d="M12 2c-.4 3.5 1 6.9 2.9 9.6C16.4 13.8 17 16.4 16.3 19c-.6 2.1-2.1 3.9-4.3 4.7v-2.3c.1-2.3.6-4.5 1.3-6.6z" /></svg>
+        </div>
+        <div className="text-[11px] text-white font-semibold">MongoDB Compass · cluster0.mongodb.net</div>
+      </div>
+      <div className="grid grid-cols-[200px_1fr] min-h-[360px]">
+        {/* Sidebar */}
+        <div className="bg-[#1c2022] text-gray-300 p-2 text-[11px]">
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mb-1 px-1">Databases</div>
+          <div className="flex items-center gap-1 py-1 px-1 text-white">
+            <span className="text-[8px]">▼</span>
+            <span>🗃</span>
+            <span className="font-semibold">shop</span>
+          </div>
+          <div className="pl-5 text-gray-400">
+            <div className="py-0.5">▸ clientes</div>
+            <div className="py-0.5 text-[#00ED64] font-semibold bg-[#00ED64]/10 rounded px-1">▼ pedidos</div>
+            <div className="py-0.5">▸ productos</div>
+            <div className="py-0.5">▸ resenas</div>
+          </div>
+          <div className="mt-3 text-[9px] text-gray-500 uppercase tracking-wider mb-1 px-1">Collection</div>
+          <div className="px-1 space-y-1 text-[10px]">
+            <div className="text-gray-400">Documents <span className="text-white font-mono">1.2k</span></div>
+            <div className="text-gray-400">Size <span className="text-white font-mono">480 KB</span></div>
+            <div className="text-gray-400">Indexes <span className="text-white font-mono">3</span></div>
+          </div>
+        </div>
+        {/* Main */}
+        <div className="flex flex-col bg-white">
+          {/* Tabs */}
+          <div className="bg-[#f5f6f7] border-b border-gray-200 px-3 flex items-end text-[11px]">
+            <div className="px-3 py-1.5 text-gray-500">Documents</div>
+            <div className="px-3 py-1.5 border-b-2 border-b-[#00ED64] bg-white font-semibold">Aggregations</div>
+            <div className="px-3 py-1.5 text-gray-500">Schema</div>
+            <div className="px-3 py-1.5 text-gray-500">Indexes</div>
+            <div className="px-3 py-1.5 text-gray-500">Validation</div>
+          </div>
+          {/* Pipeline stages */}
+          <div className="p-3 space-y-2">
+            {[
+              { stage: '$match', color: '#00ED64', body: `{ fecha: { $gte: ISODate('2026-04-01') } }` },
+              { stage: '$group', color: '#3b82f6', body: `{ _id: '$cliente_id', total: { $sum: '$total' }, n: { $sum: 1 } }` },
+              { stage: '$sort', color: '#f59e0b', body: `{ total: -1 }` },
+              { stage: '$limit', color: '#ec4899', body: `10` },
+            ].map((s) => (
+              <div key={s.stage} className="rounded border border-gray-200 bg-white overflow-hidden">
+                <div className="px-3 py-1 bg-gray-50 border-b border-gray-200 flex items-center gap-2 text-[10px]">
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ background: s.color }} />
+                  <span className="font-mono font-semibold text-gray-700">{s.stage}</span>
+                  <span className="ml-auto text-gray-400">STAGE</span>
+                </div>
+                <div className="px-3 py-2 font-mono text-[10px] text-gray-800">{s.body}</div>
+              </div>
+            ))}
+          </div>
+          {/* Output preview */}
+          <div className="border-t border-gray-200 bg-[#0f1b0a]/5 px-3 py-2">
+            <div className="text-[10px] text-gray-500 mb-1 font-mono">OUTPUT (preview)</div>
+            <div className="font-mono text-[10px] text-gray-700 space-y-0.5">
+              <div>{'{'} _id: ObjectId(&quot;...42&quot;), total: <span className="text-[#9c27b0]">6480000</span>, n: <span className="text-[#9c27b0]">14</span> {'}'}</div>
+              <div>{'{'} _id: ObjectId(&quot;...17&quot;), total: <span className="text-[#9c27b0]">4120000</span>, n: <span className="text-[#9c27b0]">9</span> {'}'}</div>
+              <div>{'{'} _id: ObjectId(&quot;...31&quot;), total: <span className="text-[#9c27b0]">3890000</span>, n: <span className="text-[#9c27b0]">7</span> {'}'}</div>
+              <div className="text-gray-400">// 10 documents (0.038 s)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ========= MOCK: Snowsight =========
+function SnowsightMock() {
+  return (
+    <div className="bg-[#eef2f6] text-gray-800" style={{ minHeight: 400 }}>
+      <div className="flex items-center gap-3 px-3 py-2 bg-white border-b border-gray-200">
+        <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 2L12 6L16 6L13 9L14 13L10 11L6 13L7 9L4 6L8 6Z" fill="#29B5E8" /></svg>
+        <div className="text-[11px] font-semibold text-gray-700">Snowsight · ACCOUNTADMIN · COMPUTE_WH</div>
+        <div className="ml-auto flex items-center gap-2 text-[10px] text-gray-500">
+          <span className="w-1.5 h-1.5 rounded-full bg-green-500" /> Running
+        </div>
+      </div>
+      <div className="grid grid-cols-[180px_1fr]" style={{ minHeight: 360 }}>
+        <div className="bg-white border-r border-gray-200 p-2 text-[11px]">
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Databases</div>
+          <div className="space-y-0.5">
+            <div className="pl-1 text-gray-700">▸ SNOWFLAKE_SAMPLE</div>
+            <div className="pl-1 text-gray-800 font-semibold">▼ SHOP_DB</div>
+            <div className="pl-4 text-gray-600">▼ PUBLIC</div>
+            <div className="pl-7 text-[#29B5E8] font-semibold bg-[#29B5E8]/10 rounded px-1">📊 PEDIDOS_FACT</div>
+            <div className="pl-7 text-gray-600">📋 CLIENTES_DIM</div>
+            <div className="pl-7 text-gray-600">📋 PRODUCTOS_DIM</div>
+          </div>
+          <div className="mt-3 text-[9px] text-gray-500 uppercase tracking-wider mb-1">Warehouses</div>
+          <div className="text-[10px] space-y-0.5">
+            <div className="px-2 py-1 rounded bg-[#29B5E8]/10 text-[#0B5A82] font-semibold">◆ COMPUTE_WH · XS</div>
+            <div className="px-2 py-1 text-gray-500">◇ ANALYTICS_WH · L</div>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="p-3 bg-white border-b border-gray-200 font-mono text-[11px]">
+            <div className="text-gray-400">-- Pedidos por mes con window function</div>
+            <div><span className="text-[#0B5A82] font-bold">SELECT</span> DATE_TRUNC(<span className="text-[#e91e63]">&apos;month&apos;</span>, fecha) <span className="text-[#0B5A82]">AS</span> mes,</div>
+            <div className="pl-4"><span className="text-[#9c27b0]">SUM</span>(total) <span className="text-[#0B5A82]">AS</span> ventas,</div>
+            <div className="pl-4"><span className="text-[#9c27b0]">SUM</span>(total) <span className="text-[#0B5A82]">OVER</span> (<span className="text-[#0B5A82]">ORDER BY</span> DATE_TRUNC(<span className="text-[#e91e63]">&apos;month&apos;</span>, fecha)) <span className="text-[#0B5A82]">AS</span> acum</div>
+            <div><span className="text-[#0B5A82] font-bold">FROM</span> pedidos_fact</div>
+            <div><span className="text-[#0B5A82] font-bold">GROUP BY</span> <span className="text-[#2196f3]">1</span> <span className="text-[#0B5A82]">ORDER BY</span> <span className="text-[#2196f3]">1</span>;</div>
+          </div>
+          {/* Chart area */}
+          <div className="flex-1 bg-white p-3">
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-[11px] font-semibold text-gray-700">Ventas acumuladas · 2026</div>
+              <div className="flex gap-1 text-[10px]">
+                <div className="px-2 py-0.5 rounded bg-gray-100 text-gray-500">Table</div>
+                <div className="px-2 py-0.5 rounded bg-[#29B5E8] text-white font-semibold">Chart</div>
+              </div>
+            </div>
+            <svg viewBox="0 0 400 140" className="w-full h-32">
+              <defs>
+                <linearGradient id="snowflakeArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#29B5E8" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#29B5E8" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              {/* Grid */}
+              {[0, 1, 2, 3].map((i) => <line key={i} x1="30" y1={20 + i * 30} x2="395" y2={20 + i * 30} stroke="#e5e7eb" strokeDasharray="2 3" />)}
+              {/* Bars (ventas mensuales) */}
+              {[60, 45, 80, 50, 90, 65, 75, 85, 55, 95, 70, 100].map((h, i) => (
+                <rect key={i} x={35 + i * 30} y={130 - h} width="18" height={h} fill="#29B5E8" opacity="0.3" rx="2" />
+              ))}
+              {/* Line (acumulado) */}
+              <polyline
+                points="45,120 75,100 105,80 135,70 165,55 195,45 225,38 255,28 285,22 315,17 345,12 375,8"
+                fill="none"
+                stroke="#29B5E8"
+                strokeWidth="2.5"
+              />
+              <path
+                d="M 45,120 L 75,100 L 105,80 L 135,70 L 165,55 L 195,45 L 225,38 L 255,28 L 285,22 L 315,17 L 345,12 L 375,8 L 375,130 L 45,130 Z"
+                fill="url(#snowflakeArea)"
+              />
+              {/* Labels */}
+              {['E', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'].map((m, i) => (
+                <text key={i} x={45 + i * 30} y="138" fontSize="8" fill="#9ca3af" textAnchor="middle">{m}</text>
+              ))}
+            </svg>
+            <div className="text-[10px] text-gray-500 mt-1 flex gap-3">
+              <span>● Ventas mensuales</span>
+              <span>— Acumulado</span>
+              <span className="ml-auto text-green-600">Query: 0.4 s · 1 credit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ========= MOCK: Supabase Studio =========
+function SupabaseMock() {
+  return (
+    <div className="bg-[#1c1c1c] text-gray-200" style={{ minHeight: 400 }}>
+      <div className="flex items-center gap-3 px-3 py-2 bg-[#0e0e0e] border-b border-gray-800">
+        <div className="w-5 h-5 rounded bg-[#3ECF8E] flex items-center justify-center text-black text-[10px] font-bold">S</div>
+        <div className="text-[11px] font-semibold">supabase · shop-api · production</div>
+        <div className="ml-auto flex items-center gap-2 text-[10px] text-gray-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#3ECF8E]" /> Connected
+        </div>
+      </div>
+      <div className="grid grid-cols-[60px_180px_1fr]" style={{ minHeight: 360 }}>
+        {/* Icon sidebar */}
+        <div className="bg-[#0e0e0e] border-r border-gray-800 py-3 flex flex-col items-center gap-3 text-lg">
+          {[
+            { i: '🏠', on: false },
+            { i: '📊', on: true },
+            { i: '🔐', on: false },
+            { i: '📦', on: false },
+            { i: '⚡', on: false },
+            { i: '🔍', on: false },
+            { i: '⚙', on: false },
+          ].map((x, i) => (
+            <div key={i} className={`w-8 h-8 rounded-md flex items-center justify-center text-sm ${x.on ? 'bg-[#3ECF8E]/20 text-[#3ECF8E]' : 'text-gray-500 hover:text-gray-300'}`}>
+              {x.i}
+            </div>
+          ))}
+        </div>
+        {/* Table list */}
+        <div className="bg-[#1c1c1c] border-r border-gray-800 p-2 text-[11px]">
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mb-2 px-1">Table Editor</div>
+          <div className="space-y-0.5">
+            <div className="px-2 py-1 rounded bg-[#3ECF8E]/10 text-[#3ECF8E] font-semibold flex items-center gap-1.5"><span>◇</span> pedidos <span className="ml-auto text-[9px] text-gray-500">1.2k</span></div>
+            <div className="px-2 py-1 rounded text-gray-400 flex items-center gap-1.5"><span>◇</span> clientes <span className="ml-auto text-[9px] text-gray-500">340</span></div>
+            <div className="px-2 py-1 rounded text-gray-400 flex items-center gap-1.5"><span>◇</span> productos <span className="ml-auto text-[9px] text-gray-500">87</span></div>
+            <div className="px-2 py-1 rounded text-gray-400 flex items-center gap-1.5"><span>◇</span> resenas <span className="ml-auto text-[9px] text-gray-500">2.8k</span></div>
+          </div>
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mt-4 mb-1 px-1">Policies (RLS)</div>
+          <div className="px-2 py-1 text-[10px] text-gray-400 flex items-center gap-1">
+            <span className="text-green-400">●</span> enabled
+          </div>
+        </div>
+        {/* Main */}
+        <div className="flex flex-col">
+          <div className="px-3 py-2 border-b border-gray-800 flex items-center justify-between">
+            <div className="flex items-center gap-2 text-[11px]">
+              <span className="text-[#3ECF8E] font-semibold">public.pedidos</span>
+              <span className="text-gray-600">·</span>
+              <span className="text-gray-400">1,248 rows</span>
+            </div>
+            <div className="flex gap-1.5 text-[10px]">
+              <button className="px-2 py-1 rounded border border-gray-700 text-gray-300">+ Insert row</button>
+              <button className="px-2 py-1 rounded bg-[#3ECF8E] text-black font-semibold">Definition</button>
+            </div>
+          </div>
+          <table className="w-full text-[10px]">
+            <thead className="bg-[#0e0e0e] text-gray-400">
+              <tr>
+                {['id', 'cliente_id', 'fecha', 'total', 'estado', 'pais'].map((h) => (
+                  <th key={h} className="text-left px-3 py-1.5 border-r border-gray-800 font-mono">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="font-mono">
+              {[
+                [1001, 42, '2026-04-22', 480000, 'pagado', 'CO'],
+                [1002, 17, '2026-04-22', 120000, 'pagado', 'MX'],
+                [1003, 31, '2026-04-21', 980000, 'pendiente', 'CL'],
+                [1004, 42, '2026-04-21', 340000, 'pagado', 'CO'],
+                [1005, 55, '2026-04-20', 2340000, 'pagado', 'CO'],
+                [1006, 17, '2026-04-20', 190000, 'cancelado', 'MX'],
+              ].map((r, i) => (
+                <tr key={i} className={i % 2 === 0 ? 'bg-[#1c1c1c]' : 'bg-[#252525]'}>
+                  {r.map((c, j) => (
+                    <td key={j} className="px-3 py-1.5 border-r border-gray-800/50 text-gray-200">{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {/* Realtime strip */}
+          <div className="mt-auto px-3 py-2 border-t border-gray-800 bg-[#0e0e0e] flex items-center gap-3 text-[10px]">
+            <span className="flex items-center gap-1.5 text-[#3ECF8E]">
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inline-flex w-full h-full rounded-full bg-[#3ECF8E] opacity-75 animate-ping" />
+                <span className="relative inline-flex w-2 h-2 rounded-full bg-[#3ECF8E]" />
+              </span>
+              Realtime ON
+            </span>
+            <span className="text-gray-500">· pg_notify · channel: pedidos</span>
+            <span className="ml-auto text-gray-500">RLS policies: 3 · JWT auth</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ========= MOCK: MongoDB Atlas Search =========
+function AtlasSearchMock() {
+  return (
+    <div className="bg-[#13232f] text-gray-200" style={{ minHeight: 400 }}>
+      <div className="flex items-center gap-3 px-3 py-2 bg-[#0a151c] border-b border-[#1a3449]">
+        <div className="w-5 h-5 rounded bg-[#00ED64] flex items-center justify-center text-black text-[10px] font-bold">M</div>
+        <div className="text-[11px] font-semibold">MongoDB Atlas · Cluster0 · Vector Search</div>
+      </div>
+      <div className="grid grid-cols-[220px_1fr]" style={{ minHeight: 360 }}>
+        <div className="bg-[#0e1a24] border-r border-[#1a3449] p-2 text-[11px]">
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mb-1 px-1">Search Indexes</div>
+          <div className="px-2 py-1.5 rounded bg-[#00ED64]/10 text-[#00ED64] text-[10px]">
+            <div className="font-semibold">products_vector</div>
+            <div className="text-gray-500 text-[9px]">vectorSearch · 1536 dims · cosine</div>
+          </div>
+          <div className="px-2 py-1.5 rounded text-gray-400 text-[10px] mt-1">
+            <div>products_text</div>
+            <div className="text-gray-500 text-[9px]">search · lucene</div>
+          </div>
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mt-3 mb-1 px-1">Stats</div>
+          <div className="px-2 text-[10px] space-y-0.5 text-gray-400">
+            <div>Documents <span className="text-white">124,380</span></div>
+            <div>Index size <span className="text-white">780 MB</span></div>
+            <div>Build time <span className="text-white">~2 min</span></div>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="p-3 border-b border-[#1a3449]">
+            <div className="text-[11px] text-gray-400 mb-1 font-mono">Semantic query</div>
+            <div className="bg-[#0a151c] border border-[#1a3449] rounded px-3 py-2 text-[12px] font-mono text-[#00ED64]">
+              &quot;audífonos con buena cancelación de ruido para trabajar&quot;
+            </div>
+          </div>
+          <div className="p-3 bg-[#0a151c] font-mono text-[10px] border-b border-[#1a3449]">
+            <div className="text-gray-500">// Aggregation pipeline</div>
+            <div>{'{'}</div>
+            <div className="pl-3"><span className="text-[#00ED64]">$vectorSearch</span>: {'{'}</div>
+            <div className="pl-6">index: <span className="text-[#fbbf24]">&apos;products_vector&apos;</span>,</div>
+            <div className="pl-6">path: <span className="text-[#fbbf24]">&apos;embedding&apos;</span>,</div>
+            <div className="pl-6">queryVector: [<span className="text-[#60a5fa]">0.12, -0.88, 0.45, ...</span>],</div>
+            <div className="pl-6">numCandidates: <span className="text-[#a78bfa]">200</span>,</div>
+            <div className="pl-6">limit: <span className="text-[#a78bfa]">5</span></div>
+            <div className="pl-3">{'}'}</div>
+            <div>{'}'}</div>
+          </div>
+          <div className="flex-1 p-3">
+            <div className="text-[10px] text-gray-500 mb-2">RESULTS · sorted by similarity</div>
+            <div className="space-y-1.5">
+              {[
+                { t: 'Sony WH-1000XM5 Wireless', score: 0.94, cat: 'Audio' },
+                { t: 'Bose QuietComfort 45', score: 0.91, cat: 'Audio' },
+                { t: 'Apple AirPods Pro 2', score: 0.88, cat: 'Audio' },
+                { t: 'Sennheiser Momentum 4', score: 0.85, cat: 'Audio' },
+                { t: 'Anker Space Q45', score: 0.78, cat: 'Audio' },
+              ].map((r, i) => (
+                <div key={i} className="rounded bg-[#0e1a24] border border-[#1a3449] px-3 py-1.5 flex items-center gap-3">
+                  <div className="w-6 h-6 rounded bg-[#00ED64]/20 flex items-center justify-center text-[10px] text-[#00ED64] font-bold">{i + 1}</div>
+                  <div className="flex-1 text-[11px] text-white">{r.t}</div>
+                  <div className="text-[10px] text-gray-500">{r.cat}</div>
+                  <div className="w-24 h-1.5 rounded-full bg-[#1a3449] overflow-hidden">
+                    <div className="h-full bg-[#00ED64]" style={{ width: `${r.score * 100}%` }} />
+                  </div>
+                  <div className="text-[10px] font-mono text-[#00ED64] w-10 text-right">{r.score.toFixed(2)}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ========= MOCK: Redis Insight =========
+function RedisInsightMock() {
+  return (
+    <div className="bg-[#1c1b20] text-gray-200" style={{ minHeight: 400 }}>
+      <div className="flex items-center gap-3 px-3 py-2 bg-[#0c0b0f] border-b border-gray-800">
+        <div className="w-5 h-5 rounded bg-[#DC382D] flex items-center justify-center">
+          <div className="text-white text-[11px] font-black">R</div>
+        </div>
+        <div className="text-[11px] font-semibold">Redis Insight · localhost:6379 · db0</div>
+        <div className="ml-auto text-[10px] text-gray-400">1.8 MB / 2 GB · 1,240 keys</div>
+      </div>
+      <div className="grid grid-cols-[200px_1fr] min-h-[360px]">
+        <div className="bg-[#14131a] border-r border-gray-800 p-2 text-[11px]">
+          <div className="px-2 py-1 rounded border border-gray-700 flex items-center gap-2 mb-2">
+            <span className="text-gray-500">🔍</span>
+            <span className="text-gray-500 text-[10px]">session:*</span>
+          </div>
+          <div className="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Key Tree</div>
+          <div className="space-y-0.5 text-[10px]">
+            {[
+              { k: 'session:user:42', t: 'HASH', color: '#fbbf24', on: true },
+              { k: 'session:user:17', t: 'HASH', color: '#fbbf24' },
+              { k: 'cart:42', t: 'JSON', color: '#a78bfa' },
+              { k: 'rate:api:42', t: 'STRING', color: '#60a5fa' },
+              { k: 'leaderboard:daily', t: 'ZSET', color: '#34d399' },
+              { k: 'queue:emails', t: 'STREAM', color: '#f87171' },
+            ].map((x) => (
+              <div key={x.k} className={`px-2 py-1 rounded flex items-center gap-2 ${x.on ? 'bg-[#DC382D]/10 text-white' : 'text-gray-400'}`}>
+                <span className="px-1 py-0.5 rounded text-[8px] font-mono font-bold" style={{ background: `${x.color}22`, color: x.color }}>{x.t}</span>
+                <span className="truncate">{x.k}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <div className="px-3 py-2 border-b border-gray-800">
+            <div className="text-[11px] text-[#DC382D] font-semibold">session:user:42 <span className="text-gray-500">· HASH · TTL 1h 23m</span></div>
+          </div>
+          <div className="p-3 border-b border-gray-800">
+            <table className="w-full text-[10px]">
+              <thead className="text-gray-500">
+                <tr>
+                  <th className="text-left py-1">field</th>
+                  <th className="text-left py-1">value</th>
+                </tr>
+              </thead>
+              <tbody className="font-mono text-gray-200">
+                {[
+                  ['user_id', '42'],
+                  ['email', 'maria@correo.co'],
+                  ['role', 'admin'],
+                  ['last_seen', '2026-04-22T14:32:10Z'],
+                  ['device', 'iPhone · iOS 19.2'],
+                ].map((r) => (
+                  <tr key={r[0]} className="border-t border-gray-800">
+                    <td className="py-1 text-[#DC382D]">{r[0]}</td>
+                    <td className="py-1">{r[1]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex-1 p-3 bg-[#0c0b0f] font-mono text-[10px]">
+            <div className="text-gray-500 mb-1">// CLI</div>
+            <div className="text-gray-300">127.0.0.1:6379&gt; <span className="text-[#fbbf24]">HGETALL</span> session:user:42</div>
+            <div className="text-[#60a5fa] pl-4">1) &quot;user_id&quot; 2) &quot;42&quot;</div>
+            <div className="text-[#60a5fa] pl-4">3) &quot;email&quot; 4) &quot;maria@correo.co&quot;</div>
+            <div className="text-[#60a5fa] pl-4">...</div>
+            <div className="text-gray-300 mt-2">127.0.0.1:6379&gt; <span className="text-[#fbbf24]">EXPIRE</span> session:user:42 3600</div>
+            <div className="text-[#34d399] pl-4">(integer) 1</div>
+            <div className="text-gray-500 mt-1">· Ping 0.3 ms · Ops/sec: 12,480</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---- Lógica unificada: la revelación ----
+
+function LogicaUnificada() {
+  const ops = [
+    { op: 'Guardar algo nuevo', sql: 'INSERT INTO ...', mongo: 'insertOne({...})', redis: 'SET key val', graph: 'CREATE (n:Node)' },
+    { op: 'Leer por clave', sql: 'SELECT ... WHERE id=7', mongo: 'findOne({_id: 7})', redis: 'GET key', graph: 'MATCH (n {id: 7})' },
+    { op: 'Actualizar un campo', sql: 'UPDATE ... SET ...', mongo: 'updateOne({$set:...})', redis: 'HSET key f v', graph: 'SET n.prop = v' },
+    { op: 'Borrar', sql: 'DELETE FROM ...', mongo: 'deleteOne({...})', redis: 'DEL key', graph: 'DELETE n' },
+    { op: 'Filtrar un conjunto', sql: 'WHERE pais = ...', mongo: '{ pais: ... }', redis: 'SCAN + MATCH', graph: 'WHERE n.pais = ...' },
+    { op: 'Agregar / agrupar', sql: 'GROUP BY + SUM', mongo: '$group + $sum', redis: 'ZINCRBY + ZRANGE', graph: 'RETURN count(n)' },
+  ];
+  return (
+    <Card>
+      <h3 className="text-base font-bold text-[var(--text-heading)] mb-1">
+        La matriz de operaciones: lo que importa aprender
+      </h3>
+      <p className="text-xs text-[var(--text-muted)] mb-4">
+        6 operaciones. 4 paradigmas. Distinto vestido, mismos huesos. Esta tabla es el mapa mental que
+        hay que llevarse.
+      </p>
+      <div className="overflow-x-auto rounded-xl border border-[var(--border-color)]">
+        <table className="w-full text-xs">
+          <thead>
+            <tr className="bg-[var(--bg-tertiary)]">
+              <th className="text-left px-3 py-2.5 text-[10px] uppercase tracking-wider text-[var(--text-muted)]">Operación</th>
+              <th className="text-left px-3 py-2.5 text-[10px] uppercase tracking-wider" style={{ color: '#336791' }}>
+                <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full" style={{ background: '#336791' }} />SQL</div>
+              </th>
+              <th className="text-left px-3 py-2.5 text-[10px] uppercase tracking-wider" style={{ color: '#00ED64' }}>
+                <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full" style={{ background: '#00ED64' }} />MongoDB</div>
+              </th>
+              <th className="text-left px-3 py-2.5 text-[10px] uppercase tracking-wider" style={{ color: '#DC382D' }}>
+                <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full" style={{ background: '#DC382D' }} />Redis</div>
+              </th>
+              <th className="text-left px-3 py-2.5 text-[10px] uppercase tracking-wider" style={{ color: '#4d8fff' }}>
+                <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full" style={{ background: '#4d8fff' }} />Cypher (grafo)</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {ops.map((r, i) => (
+              <tr key={r.op} className={i % 2 === 0 ? 'bg-[var(--bg-card)]' : ''}>
+                <td className="px-3 py-2.5 font-semibold text-[var(--text-heading)]">{r.op}</td>
+                <td className="px-3 py-2.5 font-mono text-[11px] text-[var(--text-body)]">{r.sql}</td>
+                <td className="px-3 py-2.5 font-mono text-[11px] text-[var(--text-body)]">{r.mongo}</td>
+                <td className="px-3 py-2.5 font-mono text-[11px] text-[var(--text-body)]">{r.redis}</td>
+                <td className="px-3 py-2.5 font-mono text-[11px] text-[var(--text-body)]">{r.graph}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Callout kind="info" title="El único concepto que de verdad hay que dominar">
+        <strong>Clave → valor.</strong> Toda base de datos, por más sofisticada que parezca, almacena algo
+        bajo una identidad y te deja traerlo de vuelta. Lo que cambia es la forma del "algo" (fila, documento,
+        vector, nodo) y las herramientas que te da para filtrarlo, combinarlo y resumirlo.
+      </Callout>
+    </Card>
   );
 }
