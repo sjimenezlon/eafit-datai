@@ -43,6 +43,40 @@ export default function Home() {
           </Link>
         </div>
 
+        {/* Resumen integrador */}
+        <div className="mt-10 max-w-3xl mx-auto">
+          <Link
+            href="/resumen"
+            className="group block rounded-xl border border-[var(--accent-pink)]/30 bg-gradient-to-r from-[var(--accent-blue)]/10 via-[var(--accent-purple)]/10 to-[var(--accent-pink)]/10 p-5 hover:border-[var(--accent-pink)]/60 transition-all"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-[var(--accent-blue)] to-[var(--accent-pink)] flex items-center justify-center text-2xl text-white">
+                ★
+              </div>
+              <div className="flex-1 text-left">
+                <div className="flex items-center gap-2">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent-pink)]/20 text-[var(--accent-pink)] font-semibold">
+                    NUEVO
+                  </span>
+                  <span className="text-[10px] text-[var(--text-muted)] uppercase tracking-wider">
+                    Lección integradora · 3-6h
+                  </span>
+                </div>
+                <h3 className="text-sm md:text-base font-bold text-[var(--text-heading)] mt-1">
+                  Resumen integral: todo un Sistema de Gestión de Bases de Datos
+                </h3>
+                <p className="text-xs text-[var(--text-muted)] mt-1">
+                  SQL, Entidad-Relación, normalización, índices, ACID, modelos de datos, RAG,
+                  plataformas, gestión y tendencias — en una sola pieza interactiva.
+                </p>
+              </div>
+              <div className="text-[var(--accent-pink)] group-hover:translate-x-1 transition-transform">
+                →
+              </div>
+            </div>
+          </Link>
+        </div>
+
         {/* Stats */}
         <div className="grid grid-cols-3 gap-6 max-w-md mx-auto mt-12">
           <div>
